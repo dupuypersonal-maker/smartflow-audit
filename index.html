@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Readiness Audit — Smartflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0e0e;
+  --paper: #f5f2ec;
+  --blue: #2563eb;
+  --blue-light: #eff4ff;
+  --blue-mid: #93aff5;
+  --muted: #888076;
+  --border: rgba(14,14,14,0.12);
+  --radius: 16px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(245,242,236,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 0.5px solid var(--border);
+}
+.logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px; letter-spacing: -.02em; color: var(--ink);
+  display: flex; align-items: center; gap: 8px; text-decoration: none;
+}
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); display: inline-block; }
+.nav-pill {
+  font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--blue); background: var(--blue-light);
+  padding: 5px 14px; border-radius: 50px;
+  border: 0.5px solid rgba(37,99,235,.2);
+}
+
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  text-align: center;
+  padding: 8rem 2rem 5rem;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 50% at 65% 35%, rgba(37,99,235,0.09) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 55% at 15% 75%, rgba(37,99,235,0.05) 0%, transparent 60%);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0; opacity: .4;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+.hero-content { position: relative; z-index: 1; max-width: 660px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--blue); font-weight: 500; margin-bottom: 1.75rem;
+  opacity: 0; animation: fadeUp .6s .1s ease forwards;
+}
+.eyebrow::before, .eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--blue); }
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(48px, 7vw, 82px);
+  line-height: 1.06; letter-spacing: -.03em;
+  color: var(--ink); margin-bottom: 1.5rem; font-weight: 400;
+  opacity: 0; animation: fadeUp .7s .25s ease forwards;
+}
+h1 em { font-style: italic; color: var(--blue); }
+.hero-sub {
+  font-size: 18px; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem;
+  line-height: 1.7; font-weight: 300;
+  opacity: 0; animation: fadeUp .7s .4s ease forwards;
+}
+.hero-arrow {
+  opacity: 0; animation: fadeUp .7s .55s ease forwards;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--muted); font-size: 13px; text-decoration: none; transition: color .2s;
+}
+.hero-arrow:hover { color: var(--blue); }
+.arrow-circle {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center;
+  transition: border-color .2s;
+  animation: bounce 2s 1.5s ease-in-out infinite;
+}
+.hero-arrow:hover .arrow-circle { border-color: var(--blue); }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+.hero-stats {
+  display: flex; justify-content: center; gap: 3.5rem; margin-top: 5rem; padding-top: 2.5rem;
+  border-top: 0.5px solid var(--border);
+  opacity: 0; animation: fadeUp .7s .7s ease forwards;
+}
+.stat-num { font-family: 'Instrument Serif', serif; font-size: 38px; letter-spacing: -.03em; color: var(--ink); line-height: 1; }
+.stat-lbl { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 300; }
+
+/* SHARED */
+.section-wrap { max-width: 760px; margin: 0 auto; padding: 7rem 2rem; }
+.section-tag {
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--blue); font-weight: 500; margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-tag::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 80px; }
+
+/* AUDIT */
+.q-block { margin-bottom: 2.5rem; }
+.q-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .7rem; }
+.q-text { font-size: 15px; font-weight: 500; color: var(--ink); }
+.q-meta { display: flex; align-items: baseline; gap: .75rem; }
+.q-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 13px; color: var(--muted); }
+.q-val { font-size: 15px; font-weight: 500; color: var(--blue); min-width: 48px; text-align: right; }
+.q-hint { font-size: 12px; color: var(--muted); margin-top: .35rem; }
+
+input[type=range] {
+  width: 100%; -webkit-appearance: none;
+  height: 2px; background: rgba(37,99,235,.18); border-radius: 1px; outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--blue); border: 3px solid var(--paper);
+  box-shadow: 0 0 0 1px var(--blue); cursor: pointer; transition: transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+.pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: .6rem; }
+.pill {
+  padding: 7px 16px; border-radius: 50px; font-size: 13px; cursor: pointer;
+  border: 0.5px solid var(--border); background: transparent; color: var(--muted);
+  transition: all .15s; user-select: none; font-family: 'DM Sans', sans-serif;
+}
+.pill:hover { border-color: rgba(37,99,235,.3); color: var(--ink); }
+.pill.active { background: var(--blue-light); border-color: rgba(37,99,235,.35); color: var(--blue); font-weight: 500; }
+
+.q-divider { border: none; border-top: 0.5px solid var(--border); margin: 2.5rem 0; }
+.run-btn {
+  width: 100%; padding: .95rem; background: var(--ink); color: var(--paper);
+  border: none; border-radius: 50px; font-size: 15px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+  transition: background .2s, transform .15s;
+}
+.run-btn:hover { background: var(--blue); transform: translateY(-1px); }
+.run-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* DIAGNOSIS */
+.diag-wrap { display: none; border-top: 0.5px solid var(--border); }
+.diag-wrap.show { display: block; }
+.diag-generating { display: none; text-align: center; padding: 5rem 2rem; }
+.diag-generating.show { display: block; }
+.spinner {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1.5px solid var(--border); border-top-color: var(--blue);
+  animation: spin .8s linear infinite; margin: 0 auto 1.25rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gen-lbl { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 16px; color: var(--muted); }
+.diag-content { display: none; }
+.diag-content.show { display: block; }
+
+.metrics-row {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem;
+}
+.metric-cell { background: var(--paper); padding: 1.75rem 1.25rem; text-align: center; }
+.m-num { font-family: 'Instrument Serif', serif; font-size: 36px; letter-spacing: -.03em; color: var(--blue); line-height: 1; margin-bottom: .35rem; }
+.m-lbl { font-size: 12px; color: var(--muted); line-height: 1.4; font-weight: 300; }
+
+.ai-box {
+  background: #fff; border: 0.5px solid var(--border);
+  border-radius: var(--radius); padding: 2rem 2rem 1.75rem;
+  margin-bottom: 2rem; position: relative;
+  box-shadow: 0 2px 20px rgba(0,0,0,.04);
+}
+.ai-tag {
+  position: absolute; top: -1px; left: 1.75rem;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  background: var(--blue); color: #fff; font-weight: 500;
+  padding: 3px 10px; border-radius: 0 0 8px 8px;
+}
+.ai-text { font-size: 16px; color: var(--ink); line-height: 1.75; font-weight: 300; padding-top: .75rem; }
+.cursor {
+  display: inline-block; width: 2px; height: 1em;
+  background: var(--blue); animation: blink .7s ease infinite;
+  vertical-align: text-bottom; margin-left: 1px;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.bars-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 1rem; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
+.bar-name { min-width: 150px; }
+.bar-track { flex: 1; height: 3px; background: rgba(37,99,235,.1); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 3px; background: var(--blue); border-radius: 2px; width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); }
+.bar-pct { font-size: 12px; color: var(--blue); font-weight: 500; min-width: 32px; text-align: right; }
+
+.dash-cta {
+  display: none; background: var(--blue-light); border: 0.5px solid rgba(37,99,235,.2);
+  border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem;
+}
+.dash-cta.show { display: block; }
+.dash-tag {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  background: var(--blue); color: #fff; font-weight: 500;
+  padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 1rem;
+}
+.dash-cta h3 { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--ink); margin-bottom: .5rem; }
+.dash-cta p { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; margin-bottom: 1.25rem; }
+.btn-dash {
+  display: inline-block; padding: .7rem 1.5rem;
+  background: var(--blue); color: #fff; border: none; border-radius: 50px;
+  font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  text-decoration: none; transition: opacity .2s;
+}
+.btn-dash:hover { opacity: .85; }
+
+/* PROCESO */
+.proceso-wrap { border-top: 0.5px solid var(--border); }
+.step-item {
+  display: grid; grid-template-columns: 52px 1fr;
+  gap: 1.5rem; padding: 2rem 0;
+  border-bottom: 0.5px solid var(--border); align-items: start;
+}
+.step-item:last-child { border-bottom: none; }
+.step-n {
+  font-family: 'Instrument Serif', serif; font-style: italic;
+  font-size: 28px; color: rgba(14,14,14,.15); line-height: 1; padding-top: 4px;
+  transition: color .3s;
+}
+.step-item:hover .step-n { color: var(--blue); }
+.step-week { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: .4rem; }
+.step-title { font-size: 17px; font-weight: 500; color: var(--ink); margin-bottom: .35rem; letter-spacing: -.01em; }
+.step-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+
+/* CTA + RESULTADOS */
+.cta-outer { border-top: 0.5px solid var(--border); }
+.cta-box {
+  background: var(--ink); border-radius: var(--radius); padding: 3.5rem 2.5rem;
+  text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden;
+}
+.cta-glow {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(37,99,235,.25) 0%, transparent 70%);
+}
+.cta-box h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(30px, 4vw, 46px); letter-spacing: -.025em;
+  color: var(--paper); margin-bottom: .75rem; font-weight: 400; position: relative;
+}
+.cta-box h2 em { font-style: italic; color: var(--blue-mid); }
+.cta-box p { font-size: 16px; color: rgba(245,242,236,.5); margin-bottom: 2rem; font-weight: 300; max-width: 400px; margin-left: auto; margin-right: auto; position: relative; }
+.btn-cta {
+  display: inline-block; padding: .9rem 2.5rem;
+  background: var(--paper); color: var(--ink); border: none; border-radius: 50px;
+  font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  text-decoration: none; transition: background .2s, transform .15s; position: relative;
+}
+.btn-cta:hover { background: var(--blue); color: #fff; transform: translateY(-1px); }
+.spots { font-size: 12px; color: rgba(245,242,236,.3); margin-top: .75rem; position: relative; }
+
+.results-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden;
+}
+.result-item { background: #fff; padding: 2rem 1.75rem; }
+.result-quote {
+  font-family: 'Instrument Serif', serif; font-size: 17px;
+  line-height: 1.5; color: var(--ink); margin-bottom: 1.5rem; letter-spacing: -.01em;
+}
+.result-quote em { font-style: italic; color: var(--blue); }
+.result-who { font-size: 12px; color: var(--muted); }
+.result-who strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: 2px; }
+
+/* FOOTER */
+footer {
+  border-top: 0.5px solid var(--border);
+  padding: 1.5rem 3rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.f-logo { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 7px; }
+footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media(max-width:640px){
+  nav { padding: 1rem 1.5rem; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .section-wrap { padding: 4rem 1.5rem; }
+  .metrics-row, .results-grid { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: .5rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo"><span class="logo-dot"></span>Smartflow</a>
+  <span class="nav-pill">Audit gratuito</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="eyebrow">AI Readiness Audit</div>
+    <h1>¿Tu empresa está<br>lista para la <em>IA?</em></h1>
+    <p class="hero-sub">6 preguntas. Diagnóstico personalizado generado por IA. Descubre cuántas horas y cuánto dinero estás dejando sobre la mesa cada mes.</p>
+    <a href="#audit" class="hero-arrow">
+      <div class="arrow-circle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      Comenzar
+    </a>
+    <div class="hero-stats">
+      <div><div class="stat-num">40h</div><div class="stat-lbl">promedio ahorradas por semana</div></div>
+      <div><div class="stat-num">30d</div><div class="stat-lbl">primer entregable en producción</div></div>
+      <div><div class="stat-num">3×</div><div class="stat-lbl">ROI promedio en 90 días</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT -->
+<div class="section-wrap" id="audit">
+  <div class="section-tag reveal">Tus datos</div>
+  <div class="reveal">
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuántas personas tiene tu equipo?</span>
+        <div class="q-meta"><span class="q-num">01</span><span class="q-val" id="v1">12</span></div>
+      </div>
+      <input type="range" min="1" max="100" step="1" value="12" id="s1" oninput="document.getElementById('v1').textContent=this.value">
+      <div class="q-hint">Incluye full-time y part-time</div>
+    </div>
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">Horas semanales en tareas repetitivas por persona</span>
+        <div class="q-meta"><span class="q-num">02</span><span class="q-val" id="v2">10 h</span></div>
+      </div>
+      <input type="range" min="1" max="40" step="1" value="10" id="s2" oninput="document.getElementById('v2').textContent=this.value+' h'">
+      <div class="q-hint">Reportes, emails, entrada de datos, seguimientos</div>
+    </div>
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">Costo hora promedio de tu equipo (USD)</span>
+        <div class="q-meta"><span class="q-num">03</span><span class="q-val" id="v3">$25</span></div>
+      </div>
+      <input type="range" min="5" max="150" step="5" value="25" id="s3" oninput="document.getElementById('v3').textContent='$'+this.value">
+    </div>
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuántos procesos críticos no están documentados?</span>
+        <div class="q-meta"><span class="q-num">04</span><span class="q-val" id="v4">4</span></div>
+      </div>
+      <input type="range" min="0" max="20" step="1" value="4" id="s4" oninput="document.getElementById('v4').textContent=this.value">
+      <div class="q-hint">Procesos que dependen de personas clave</div>
+    </div>
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Dónde viven los datos de tu empresa?</span>
+        <div class="q-meta"><span class="q-num">05</span></div>
+      </div>
+      <div class="pills">
+        <div class="pill" id="p1" onclick="selectData(1)">Hojas de cálculo</div>
+        <div class="pill" id="p2" onclick="selectData(2)">Sistemas desconectados</div>
+        <div class="pill active" id="p3" onclick="selectData(3)">CRM / ERP parcial</div>
+        <div class="pill" id="p4" onclick="selectData(4)">Todo centralizado</div>
+      </div>
+      <div class="q-hint" id="data-hint" style="margin-top:.5rem">Datos en CRM o ERP, sin integrar todas las fuentes</div>
+    </div>
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">Apertura del equipo para adoptar IA</span>
+        <div class="q-meta"><span class="q-num">06</span><span class="q-val" id="v6">Media</span></div>
+      </div>
+      <input type="range" min="1" max="3" step="1" value="2" id="s6" oninput="updateReady(this.value)">
+      <div class="q-hint">1 = resistencia · 2 = abiertos · 3 = entusiastas</div>
+    </div>
+    <hr class="q-divider">
+    <button class="run-btn" id="run-btn" onclick="runAudit()">Generar mi diagnóstico →</button>
+  </div>
+</div>
+
+<!-- DIAGNOSIS -->
+<div class="diag-wrap" id="diag-wrap">
+  <div class="section-wrap">
+    <div class="section-tag">Diagnóstico</div>
+    <div class="diag-generating" id="diag-generating">
+      <div class="spinner"></div>
+      <p class="gen-lbl">Analizando tu perfil…</p>
+    </div>
+    <div class="diag-content" id="diag-content">
+      <div class="metrics-row">
+        <div class="metric-cell"><div class="m-num" id="r-hours">—</div><div class="m-lbl">horas/semana automatizables</div></div>
+        <div class="metric-cell"><div class="m-num" id="r-cost">—</div><div class="m-lbl">costo mensual recuperable</div></div>
+        <div class="metric-cell"><div class="m-num" id="r-score">—</div><div class="m-lbl">AI readiness score</div></div>
+      </div>
+      <div class="ai-box">
+        <span class="ai-tag">Generado por IA</span>
+        <p class="ai-text" id="ai-text"></p>
+      </div>
+      <div style="margin-bottom:2rem">
+        <div class="bars-label">Potencial de automatización por área</div>
+        <div class="bar-row"><span class="bar-name">Operaciones</span><div class="bar-track"><div class="bar-fill" id="b1"></div></div><span class="bar-pct" id="bp1">0%</span></div>
+        <div class="bar-row"><span class="bar-name">Atención al cliente</span><div class="bar-track"><div class="bar-fill" id="b2"></div></div><span class="bar-pct" id="bp2">0%</span></div>
+        <div class="bar-row"><span class="bar-name">Ventas y CRM</span><div class="bar-track"><div class="bar-fill" id="b3"></div></div><span class="bar-pct" id="bp3">0%</span></div>
+        <div class="bar-row"><span class="bar-name">Finanzas y reportes</span><div class="bar-track"><div class="bar-fill" id="b4"></div></div><span class="bar-pct" id="bp4">0%</span></div>
+      </div>
+      <div class="dash-cta" id="dash-cta">
+        <span class="dash-tag">Recomendado para tu perfil</span>
+        <h3>Dashboard centralizado de IA</h3>
+        <p>Tus datos están fragmentados en múltiples fuentes. Antes de automatizar procesos, necesitas visibilidad total del negocio. Te construimos un dashboard que unifica todo en un solo lugar — listo en 2 semanas.</p>
+        <a href="https://www.loom.com/share/e229224ffbec4c6290a04d451909d557" target="_blank" rel="noopener" class="btn-dash">Quiero ver cómo funciona →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESO -->
+<div class="proceso-wrap">
+  <div class="section-wrap">
+    <div class="section-tag reveal">Cómo funciona</div>
+    <div class="reveal">
+      <div class="step-item">
+        <div class="step-n">01</div>
+        <div><div class="step-week">Semana 1</div><div class="step-title">Diagnóstico y mapeo</div><div class="step-desc">Analizamos tus procesos actuales, identificamos los cuellos de botella más costosos y definimos qué automatizar primero para máximo impacto.</div></div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">02</div>
+        <div><div class="step-week">Semana 2–3</div><div class="step-title">Diseño de solución</div><div class="step-desc">Construimos la arquitectura de IA para tu empresa: agentes, flujos, integraciones y dashboards. Sin plantillas genéricas.</div></div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">03</div>
+        <div><div class="step-week">Semana 4</div><div class="step-title">Implementación</div><div class="step-desc">Desplegamos en producción con tu equipo, validamos resultados y ajustamos hasta que los números cuadren con lo prometido.</div></div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">04</div>
+        <div><div class="step-week">Ongoing</div><div class="step-title">Optimización continua</div><div class="step-desc">La IA mejora con el tiempo. Monitoreamos, entrenamos y expandimos la solución conforme crece tu empresa.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA + RESULTADOS -->
+<div class="cta-outer">
+  <div class="section-wrap">
+    <div class="section-tag reveal">Siguiente paso</div>
+    <div class="reveal">
+      <div class="cta-box">
+        <div class="cta-glow"></div>
+        <h2>Sesión estratégica<br><em>sin costo.</em></h2>
+        <p>Te mostramos exactamente qué automatizar primero y el ROI esperado en 90 días para tu empresa.</p>
+        <a href="https://cal.com/smartflow.es/30min?user=smartflow.es" target="_blank" rel="noopener" class="btn-cta">Reservar mi sesión →</a>
+        <div class="spots">Solo 4 cupos disponibles esta semana.</div>
+      </div>
+      <div class="results-grid">
+        <div class="result-item">
+          <div class="result-quote">"Pasamos de reportes en 3 días a tenerlos <em>en tiempo real.</em> 20 horas semanales recuperadas."</div>
+          <div class="result-who"><strong>Ana Rodríguez</strong>CFO · Grupo Logístico</div>
+        </div>
+        <div class="result-item">
+          <div class="result-quote">"Un agente de ventas en 3 semanas. Hoy <em>cierra el 40% de leads</em> sin intervención humana."</div>
+          <div class="result-who"><strong>Carlos Mora</strong>CEO · Fintech Regional</div>
+        </div>
+        <div class="result-item">
+          <div class="result-quote">"Por fin todos los datos en un lugar. <em>Cambió cómo tomamos decisiones</em> cada semana."</div>
+          <div class="result-who"><strong>Laura Pérez</strong>COO · Retail Latam</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <a href="#" class="f-logo"><span class="logo-dot" style="width:7px;height:7px"></span>Smartflow</a>
+  <p>© 2026 Smartflow. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+let dataScore = 3;
+const dataHints = ['','Datos muy dispersos, difícil conectar a IA','Múltiples sistemas sin una vista unificada','Datos en CRM o ERP, sin integrar todas las fuentes','Perfecto para implementar IA de inmediato'];
+
+function selectData(v) {
+  dataScore = v;
+  [1,2,3,4].forEach(i => document.getElementById('p'+i).classList.toggle('active', i===v));
+  document.getElementById('data-hint').textContent = dataHints[v];
+}
+function updateReady(v) {
+  document.getElementById('v6').textContent = ['','Baja','Media','Alta'][v];
+}
+function calcMetrics() {
+  const team = +document.getElementById('s1').value;
+  const hrs  = +document.getElementById('s2').value;
+  const rate = +document.getElementById('s3').value;
+  const procs = +document.getElementById('s4').value;
+  const ready = +document.getElementById('s6').value;
+  const dm = [0,.25,.45,.65,.85];
+  const ar = ((ready===1?.3:ready===2?.55:.75) + dm[dataScore]) / 2;
+  const autoHrs = Math.round(team * hrs * ar);
+  const monthlyCost = Math.round(autoHrs * rate * 4);
+  const score = Math.round((ar*50)+(Math.min(procs,10)/10*20)+(Math.min(team,50)/50*15)+(dataScore/4*15));
+  const bars = [
+    Math.min(Math.round(40+ready*10+Math.min(hrs,20)*1.2+dataScore*3),95),
+    Math.min(Math.round(35+ready*9+team*0.25+dataScore*2),95),
+    Math.min(Math.round(30+ready*8+procs*1.8+dataScore*3),95),
+    Math.min(Math.round(25+ready*9+hrs*1+dataScore*4),95)
+  ];
+  return { team, hrs, rate, procs, ready, autoHrs, monthlyCost, score, bars };
+}
+
+async function runAudit() {
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true; btn.textContent = 'Analizando…';
+  const m = calcMetrics();
+
+  const diagWrap = document.getElementById('diag-wrap');
+  diagWrap.classList.add('show');
+  document.getElementById('diag-generating').classList.add('show');
+  document.getElementById('diag-content').classList.remove('show');
+  setTimeout(() => diagWrap.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+
+  document.getElementById('r-hours').textContent = m.autoHrs;
+  document.getElementById('r-cost').textContent = '$'+m.monthlyCost.toLocaleString();
+  document.getElementById('r-score').textContent = m.score+'%';
+  m.bars.forEach((v,i) => document.getElementById('bp'+(i+1)).textContent = v+'%');
+  document.getElementById('dash-cta').classList.toggle('show', dataScore<=2);
+
+  const dataLabels=['','hojas de cálculo dispersas','múltiples sistemas desconectados','CRM o ERP parcialmente integrado','datos centralizados y limpios'];
+  const readyLabels=['','baja (resistencia al cambio)','media (equipo abierto)','alta (equipo tech-friendly)'];
+  const rateVal = document.getElementById('s3').value;
+
+  const prompt = `Eres el sistema de diagnóstico de Smartflow, una consultora de IA. Un prospecto completó el audit con estos datos:\n\n- Equipo: ${m.team} personas\n- Horas semanales en tareas repetitivas por persona: ${m.hrs}h\n- Costo hora promedio: $${rateVal}\n- Procesos críticos sin documentar: ${m.procs}\n- Estado de los datos: ${dataLabels[dataScore]}\n- Apertura del equipo: ${readyLabels[m.ready]}\n\nMétricas calculadas:\n- Horas automatizables/semana: ${m.autoHrs}h\n- Costo mensual recuperable: $${m.monthlyCost.toLocaleString()}\n- AI Readiness Score: ${m.score}%\n\nEscribe un diagnóstico de 3 a 4 oraciones. Directo, sin rodeos, lenguaje de consultor experimentado. Menciona el principal obstáculo según sus datos y una recomendación concreta del primer paso. Sin listas, sin markdown, solo texto corrido. Usa "tu empresa".`;
+
+  try {
+    // Calls our own Vercel serverless function — API key never expuesta
+    const res = await fetch('/api/diagnose', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await res.json();
+    const diagText = data.text || 'No se pudo generar el diagnóstico.';
+
+    document.getElementById('diag-generating').classList.remove('show');
+    document.getElementById('diag-content').classList.add('show');
+    setTimeout(()=>m.bars.forEach((v,i)=>{document.getElementById('b'+(i+1)).style.width=v+'%';}), 200);
+
+    const el = document.getElementById('ai-text');
+    el.innerHTML = '<span class="cursor"></span>';
+    const cursor = el.querySelector('.cursor');
+    let i = 0; const chars = diagText.split('');
+    function type() {
+      if(i<chars.length){cursor.insertAdjacentText('beforebegin',chars[i++]);setTimeout(type,16);}
+      else{cursor.remove();setTimeout(()=>document.querySelector('.proceso-wrap').scrollIntoView({behavior:'smooth',block:'start'}),800);}
+    }
+    type();
+  } catch(e) {
+    document.getElementById('diag-generating').classList.remove('show');
+    document.getElementById('diag-content').classList.add('show');
+    document.getElementById('ai-text').textContent='Hubo un problema generando el diagnóstico. Intenta de nuevo.';
+    m.bars.forEach((v,i)=>{document.getElementById('b'+(i+1)).style.width=v+'%';});
+  }
+  btn.disabled=false; btn.textContent='Generar mi diagnóstico →';
+}
+
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
