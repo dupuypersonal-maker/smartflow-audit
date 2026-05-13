@@ -16,290 +16,202 @@
   --muted: #888076;
   --border: rgba(14,14,14,0.12);
   --radius: 16px;
+  --green: #16a34a;
+  --green-light: #f0fdf4;
+  --amber: #d97706;
+  --red: #dc2626;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--paper);
-  color: var(--ink);
-  font-size: 16px;
-  line-height: 1.6;
-  overflow-x: hidden;
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--paper); color: var(--ink); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
 /* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1.25rem 3rem;
-  background: rgba(245,242,236,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 0.5px solid var(--border);
-}
-.logo {
-  font-family: 'Instrument Serif', serif;
-  font-size: 22px; letter-spacing: -.02em; color: var(--ink);
-  display: flex; align-items: center; gap: 8px; text-decoration: none;
-}
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; background: rgba(245,242,236,0.85); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); }
+.logo { font-family: 'Instrument Serif', serif; font-size: 22px; letter-spacing: -.02em; color: var(--ink); display: flex; align-items: center; gap: 8px; text-decoration: none; }
 .logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); display: inline-block; }
-.nav-pill {
-  font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--blue); background: var(--blue-light);
-  padding: 5px 14px; border-radius: 50px;
-  border: 0.5px solid rgba(37,99,235,.2);
-}
+.nav-pill { font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); background: var(--blue-light); padding: 5px 14px; border-radius: 50px; border: 0.5px solid rgba(37,99,235,.2); }
 
 /* HERO */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center;
-  padding: 8rem 2rem 5rem;
-  position: relative; overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0; z-index: 0;
-  background:
-    radial-gradient(ellipse 55% 50% at 65% 35%, rgba(37,99,235,0.09) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 55% at 15% 75%, rgba(37,99,235,0.05) 0%, transparent 60%);
-}
-.hero-grid {
-  position: absolute; inset: 0; z-index: 0; opacity: .4;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-}
-.hero-content { position: relative; z-index: 1; max-width: 660px; }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--blue); font-weight: 500; margin-bottom: 1.75rem;
-  opacity: 0; animation: fadeUp .6s .1s ease forwards;
-}
+.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 55% 50% at 65% 35%, rgba(37,99,235,0.09) 0%, transparent 70%), radial-gradient(ellipse 40% 55% at 15% 75%, rgba(37,99,235,0.05) 0%, transparent 60%); }
+.hero-grid { position: absolute; inset: 0; z-index: 0; opacity: .4; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); }
+.hero-content { position: relative; z-index: 1; max-width: 680px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: 1.75rem; opacity: 0; animation: fadeUp .6s .1s ease forwards; }
 .eyebrow::before, .eyebrow::after { content: ''; width: 24px; height: 1px; background: var(--blue); }
-h1 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(48px, 7vw, 82px);
-  line-height: 1.06; letter-spacing: -.03em;
-  color: var(--ink); margin-bottom: 1.5rem; font-weight: 400;
-  opacity: 0; animation: fadeUp .7s .25s ease forwards;
-}
+h1 { font-family: 'Instrument Serif', serif; font-size: clamp(48px, 7vw, 82px); line-height: 1.06; letter-spacing: -.03em; color: var(--ink); margin-bottom: 1.5rem; font-weight: 400; opacity: 0; animation: fadeUp .7s .25s ease forwards; }
 h1 em { font-style: italic; color: var(--blue); }
-.hero-sub {
-  font-size: 18px; color: var(--muted); max-width: 500px; margin: 0 auto 2.5rem;
-  line-height: 1.7; font-weight: 300;
-  opacity: 0; animation: fadeUp .7s .4s ease forwards;
-}
-.hero-arrow {
-  opacity: 0; animation: fadeUp .7s .55s ease forwards;
-  display: inline-flex; flex-direction: column; align-items: center; gap: 8px;
-  color: var(--muted); font-size: 13px; text-decoration: none; transition: color .2s;
-}
+.hero-sub { font-size: 18px; color: var(--muted); max-width: 520px; margin: 0 auto 2.5rem; line-height: 1.7; font-weight: 300; opacity: 0; animation: fadeUp .7s .4s ease forwards; }
+.hero-arrow { opacity: 0; animation: fadeUp .7s .55s ease forwards; display: inline-flex; flex-direction: column; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; text-decoration: none; transition: color .2s; }
 .hero-arrow:hover { color: var(--blue); }
-.arrow-circle {
-  width: 40px; height: 40px; border-radius: 50%;
-  border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center;
-  transition: border-color .2s;
-  animation: bounce 2s 1.5s ease-in-out infinite;
-}
+.arrow-circle { width: 40px; height: 40px; border-radius: 50%; border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; transition: border-color .2s; animation: bounce 2s 1.5s ease-in-out infinite; }
 .hero-arrow:hover .arrow-circle { border-color: var(--blue); }
 @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
-.hero-stats {
-  display: flex; justify-content: center; gap: 3.5rem; margin-top: 5rem; padding-top: 2.5rem;
-  border-top: 0.5px solid var(--border);
-  opacity: 0; animation: fadeUp .7s .7s ease forwards;
-}
+.hero-stats { display: flex; justify-content: center; gap: 3.5rem; margin-top: 5rem; padding-top: 2.5rem; border-top: 0.5px solid var(--border); opacity: 0; animation: fadeUp .7s .7s ease forwards; }
 .stat-num { font-family: 'Instrument Serif', serif; font-size: 38px; letter-spacing: -.03em; color: var(--ink); line-height: 1; }
 .stat-lbl { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 300; }
 
+/* PROGRESS BAR */
+.progress-bar-wrap { position: sticky; top: 64px; z-index: 90; background: rgba(245,242,236,0.9); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); padding: 0; display: none; }
+.progress-bar-wrap.show { display: block; }
+.progress-bar-track { height: 2px; background: rgba(37,99,235,.12); }
+.progress-bar-fill { height: 2px; background: var(--blue); transition: width .4s ease; width: 0; }
+.progress-label { font-size: 11px; color: var(--muted); padding: .4rem 3rem; letter-spacing: .08em; text-transform: uppercase; }
+
 /* SHARED */
 .section-wrap { max-width: 760px; margin: 0 auto; padding: 7rem 2rem; }
-.section-tag {
-  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--blue); font-weight: 500; margin-bottom: 2.5rem;
-  display: flex; align-items: center; gap: 10px;
-}
+.section-tag { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: 2.5rem; display: flex; align-items: center; gap: 10px; }
 .section-tag::after { content: ''; flex: 1; height: 0.5px; background: var(--border); max-width: 80px; }
 
-/* AUDIT */
-.q-block { margin-bottom: 2.5rem; }
-.q-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .7rem; }
-.q-text { font-size: 15px; font-weight: 500; color: var(--ink); }
-.q-meta { display: flex; align-items: baseline; gap: .75rem; }
+/* QUESTIONS */
+.q-block { margin-bottom: 2.75rem; }
+.q-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .8rem; }
+.q-text { font-size: 15px; font-weight: 500; color: var(--ink); max-width: 85%; }
+.q-meta { display: flex; align-items: baseline; gap: .75rem; flex-shrink: 0; }
 .q-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 13px; color: var(--muted); }
-.q-val { font-size: 15px; font-weight: 500; color: var(--blue); min-width: 48px; text-align: right; }
-.q-hint { font-size: 12px; color: var(--muted); margin-top: .35rem; }
-
-input[type=range] {
-  width: 100%; -webkit-appearance: none;
-  height: 2px; background: rgba(37,99,235,.18); border-radius: 1px; outline: none; cursor: pointer;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%;
-  background: var(--blue); border: 3px solid var(--paper);
-  box-shadow: 0 0 0 1px var(--blue); cursor: pointer; transition: transform .15s;
-}
+.q-val { font-size: 15px; font-weight: 500; color: var(--blue); min-width: 52px; text-align: right; }
+.q-hint { font-size: 12px; color: var(--muted); margin-top: .4rem; line-height: 1.5; }
+input[type=range] { width: 100%; -webkit-appearance: none; height: 2px; background: rgba(37,99,235,.18); border-radius: 1px; outline: none; cursor: pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--blue); border: 3px solid var(--paper); box-shadow: 0 0 0 1px var(--blue); cursor: pointer; transition: transform .15s; }
 input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-
 .pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: .6rem; }
-.pill {
-  padding: 7px 16px; border-radius: 50px; font-size: 13px; cursor: pointer;
-  border: 0.5px solid var(--border); background: transparent; color: var(--muted);
-  transition: all .15s; user-select: none; font-family: 'DM Sans', sans-serif;
-}
+.pill { padding: 7px 16px; border-radius: 50px; font-size: 13px; cursor: pointer; border: 0.5px solid var(--border); background: transparent; color: var(--muted); transition: all .15s; user-select: none; font-family: 'DM Sans', sans-serif; }
 .pill:hover { border-color: rgba(37,99,235,.3); color: var(--ink); }
 .pill.active { background: var(--blue-light); border-color: rgba(37,99,235,.35); color: var(--blue); font-weight: 500; }
-
 .q-divider { border: none; border-top: 0.5px solid var(--border); margin: 2.5rem 0; }
-.run-btn {
-  width: 100%; padding: .95rem; background: var(--ink); color: var(--paper);
-  border: none; border-radius: 50px; font-size: 15px; font-weight: 500;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  transition: background .2s, transform .15s;
-}
+.q-section-header { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--ink); letter-spacing: -.02em; margin-bottom: 2rem; margin-top: 1rem; padding-bottom: 1rem; border-bottom: 0.5px solid var(--border); }
+.q-section-header em { font-style: italic; color: var(--blue); }
+
+/* EMAIL GATE */
+.email-gate { background: var(--ink); border-radius: var(--radius); padding: 2.75rem 2.5rem; text-align: center; position: relative; overflow: hidden; margin-bottom: 1.5rem; }
+.email-gate-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(37,99,235,.25) 0%, transparent 70%); }
+.email-gate-tag { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; background: var(--blue); color: #fff; padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 1.25rem; font-weight: 500; position: relative; }
+.email-gate h3 { font-family: 'Instrument Serif', serif; font-size: clamp(20px, 3vw, 28px); color: var(--paper); margin-bottom: .5rem; font-weight: 400; letter-spacing: -.02em; position: relative; }
+.email-gate h3 em { font-style: italic; color: var(--blue-mid); }
+.email-gate p { font-size: 14px; color: rgba(245,242,236,.5); margin-bottom: 1.75rem; font-weight: 300; line-height: 1.65; max-width: 400px; margin-left: auto; margin-right: auto; position: relative; }
+.email-form { display: flex; gap: .75rem; max-width: 420px; margin: 0 auto; position: relative; }
+.email-input { flex: 1; padding: .85rem 1.25rem; background: rgba(245,242,236,.08); border: 0.5px solid rgba(245,242,236,.15); border-radius: 50px; font-size: 14px; color: var(--paper); font-family: 'DM Sans', sans-serif; outline: none; transition: border-color .2s; }
+.email-input::placeholder { color: rgba(245,242,236,.35); }
+.email-input:focus { border-color: var(--blue); }
+.email-submit { padding: .85rem 1.5rem; background: var(--blue); color: #fff; border: none; border-radius: 50px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: opacity .2s; }
+.email-submit:hover { opacity: .88; }
+.email-note { font-size: 12px; color: rgba(245,242,236,.25); margin-top: .75rem; position: relative; }
+
+.run-btn { width: 100%; padding: .95rem; background: var(--ink); color: var(--paper); border: none; border-radius: 50px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background .2s, transform .15s; }
 .run-btn:hover { background: var(--blue); transform: translateY(-1px); }
 .run-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
 /* DIAGNOSIS */
 .diag-wrap { display: none; border-top: 0.5px solid var(--border); }
 .diag-wrap.show { display: block; }
-.diag-generating { display: none; text-align: center; padding: 5rem 2rem; }
+.diag-generating { display: none; text-align: center; padding: 6rem 2rem; }
 .diag-generating.show { display: block; }
-.spinner {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 1.5px solid var(--border); border-top-color: var(--blue);
-  animation: spin .8s linear infinite; margin: 0 auto 1.25rem;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.gen-lbl { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 16px; color: var(--muted); }
+.gen-steps { max-width: 300px; margin: 0 auto; }
+.gen-step { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--muted); font-weight: 300; opacity: .35; transition: opacity .3s; margin-bottom: .6rem; }
+.gen-step.active { opacity: 1; color: var(--ink); }
+.gen-step.done { opacity: .5; }
+.gen-icon { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.gen-step.active .gen-icon { border-color: var(--blue); }
+.gen-step.done .gen-icon { border-color: var(--green); background: var(--green-light); }
+.mini-spinner { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid rgba(37,99,235,.3); border-top-color: var(--blue); animation: spin .6s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.gen-check { color: var(--green); font-size: 11px; }
+.gen-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--border); }
+
 .diag-content { display: none; }
 .diag-content.show { display: block; }
 
-.metrics-row {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
-  background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem;
-}
-.metric-cell { background: var(--paper); padding: 1.75rem 1.25rem; text-align: center; }
-.m-num { font-family: 'Instrument Serif', serif; font-size: 36px; letter-spacing: -.03em; color: var(--blue); line-height: 1; margin-bottom: .35rem; }
-.m-lbl { font-size: 12px; color: var(--muted); line-height: 1.4; font-weight: 300; }
+/* SCORE HERO */
+.score-hero { background: var(--ink); border-radius: var(--radius); padding: 2.5rem; text-align: center; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
+.score-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(37,99,235,.2) 0%, transparent 70%); }
+.score-tag { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: rgba(245,242,236,.4); font-weight: 500; margin-bottom: 1rem; position: relative; }
+.score-ring-wrap { display: flex; justify-content: center; margin-bottom: 1.5rem; position: relative; }
+.score-num { font-family: 'Instrument Serif', serif; font-size: 56px; letter-spacing: -.04em; color: var(--paper); line-height: 1; }
+.score-pct { font-size: 22px; color: var(--blue-mid); }
+.score-label { font-size: 14px; color: rgba(245,242,236,.5); font-weight: 300; margin-bottom: 2rem; position: relative; }
+.metrics-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(255,255,255,.08); border-radius: 10px; overflow: hidden; position: relative; }
+.metric-cell { background: rgba(255,255,255,.04); padding: 1.25rem 1rem; text-align: center; }
+.m-num { font-family: 'Instrument Serif', serif; font-size: 28px; letter-spacing: -.03em; color: var(--blue-mid); line-height: 1; margin-bottom: .3rem; }
+.m-lbl { font-size: 11px; color: rgba(245,242,236,.4); line-height: 1.4; font-weight: 300; }
 
-.ai-box {
-  background: #fff; border: 0.5px solid var(--border);
-  border-radius: var(--radius); padding: 2rem 2rem 1.75rem;
-  margin-bottom: 2rem; position: relative;
-  box-shadow: 0 2px 20px rgba(0,0,0,.04);
-}
-.ai-tag {
-  position: absolute; top: -1px; left: 1.75rem;
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  background: var(--blue); color: #fff; font-weight: 500;
-  padding: 3px 10px; border-radius: 0 0 8px 8px;
-}
-.ai-text { font-size: 16px; color: var(--ink); line-height: 1.75; font-weight: 300; padding-top: .75rem; }
-.cursor {
-  display: inline-block; width: 2px; height: 1em;
-  background: var(--blue); animation: blink .7s ease infinite;
-  vertical-align: text-bottom; margin-left: 1px;
-}
+/* DIAGNOSIS SECTIONS */
+.diag-section { background: #fff; border: 0.5px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,.04); }
+.diag-section-header { padding: 1.25rem 1.75rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.diag-section-title { font-size: 13px; font-weight: 500; color: var(--ink); display: flex; align-items: center; gap: 10px; }
+.diag-section-badge { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 50px; font-weight: 600; }
+.badge-exec { background: var(--blue-light); color: var(--blue); }
+.badge-offer { background: #fff7ed; color: var(--amber); border: 0.5px solid rgba(217,119,6,.2); }
+.badge-plan { background: var(--green-light); color: var(--green); border: 0.5px solid rgba(22,163,74,.2); }
+.diag-section-body { padding: 1.75rem; }
+
+/* EXECUTIVE ANALYSIS */
+.exec-text { font-size: 15px; color: var(--ink); line-height: 1.8; font-weight: 300; margin-bottom: 1.5rem; }
+.exec-text strong { font-weight: 500; color: var(--ink); }
+.cursor { display: inline-block; width: 2px; height: 1em; background: var(--blue); animation: blink .7s ease infinite; vertical-align: text-bottom; margin-left: 1px; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.bars-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 1rem; }
-.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 13px; color: var(--muted); }
-.bar-name { min-width: 150px; }
-.bar-track { flex: 1; height: 3px; background: rgba(37,99,235,.1); border-radius: 2px; overflow: hidden; }
-.bar-fill { height: 3px; background: var(--blue); border-radius: 2px; width: 0; transition: width .9s cubic-bezier(.22,1,.36,1); }
-.bar-pct { font-size: 12px; color: var(--blue); font-weight: 500; min-width: 32px; text-align: right; }
+/* AREA BARS */
+.bars-section { margin-bottom: 1.5rem; }
+.bars-label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin-bottom: 1rem; }
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.bar-name { font-size: 13px; color: var(--muted); min-width: 160px; font-weight: 300; }
+.bar-track { flex: 1; height: 4px; background: rgba(37,99,235,.1); border-radius: 2px; overflow: hidden; }
+.bar-fill { height: 4px; border-radius: 2px; width: 0; transition: width 1s cubic-bezier(.22,1,.36,1); }
+.bar-fill.high { background: var(--green); }
+.bar-fill.mid { background: var(--blue); }
+.bar-fill.low { background: var(--amber); }
+.bar-pct { font-size: 12px; font-weight: 500; min-width: 34px; text-align: right; }
 
-.dash-cta {
-  display: none; background: var(--blue-light); border: 0.5px solid rgba(37,99,235,.2);
-  border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem;
-}
-.dash-cta.show { display: block; }
-.dash-tag {
-  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-  background: var(--blue); color: #fff; font-weight: 500;
-  padding: 4px 12px; border-radius: 50px; display: inline-block; margin-bottom: 1rem;
-}
-.dash-cta h3 { font-family: 'Instrument Serif', serif; font-size: 22px; color: var(--ink); margin-bottom: .5rem; }
-.dash-cta p { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; margin-bottom: 1.25rem; }
-.btn-dash {
-  display: inline-block; padding: .7rem 1.5rem;
-  background: var(--blue); color: #fff; border: none; border-radius: 50px;
-  font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
-  text-decoration: none; transition: opacity .2s;
-}
-.btn-dash:hover { opacity: .85; }
+/* OFFER RECOMMENDATION */
+.offer-card { border: 1.5px solid rgba(217,119,6,.25); background: #fffbf5; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+.offer-card.recommended { border-color: rgba(37,99,235,.3); background: var(--blue-light); }
+.offer-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .75rem; }
+.offer-name { font-size: 15px; font-weight: 500; color: var(--ink); }
+.offer-fit-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 50px; }
+.fit-primary { background: var(--blue); color: #fff; }
+.fit-secondary { background: rgba(14,14,14,.07); color: var(--muted); }
+.offer-desc { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 300; }
+.offer-reason { font-size: 13px; color: var(--blue); font-weight: 400; margin-top: .6rem; font-style: italic; }
 
-/* PROCESO */
-.proceso-wrap { border-top: 0.5px solid var(--border); }
-.step-item {
-  display: grid; grid-template-columns: 52px 1fr;
-  gap: 1.5rem; padding: 2rem 0;
-  border-bottom: 0.5px solid var(--border); align-items: start;
-}
-.step-item:last-child { border-bottom: none; }
-.step-n {
-  font-family: 'Instrument Serif', serif; font-style: italic;
-  font-size: 28px; color: rgba(14,14,14,.15); line-height: 1; padding-top: 4px;
-  transition: color .3s;
-}
-.step-item:hover .step-n { color: var(--blue); }
-.step-week { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); font-weight: 500; margin-bottom: .4rem; }
-.step-title { font-size: 17px; font-weight: 500; color: var(--ink); margin-bottom: .35rem; letter-spacing: -.01em; }
-.step-desc { font-size: 14px; color: var(--muted); font-weight: 300; line-height: 1.65; }
+/* ACTION PLAN */
+.plan-items { display: flex; flex-direction: column; gap: 1px; background: var(--border); border-radius: 10px; overflow: hidden; }
+.plan-item { background: #fff; padding: 1.25rem 1.5rem; display: flex; gap: 1.25rem; align-items: flex-start; }
+.plan-num { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 24px; color: var(--blue); opacity: .5; line-height: 1; flex-shrink: 0; min-width: 28px; }
+.plan-content {}
+.plan-title { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: .3rem; }
+.plan-desc { font-size: 13px; color: var(--muted); font-weight: 300; line-height: 1.6; }
+.plan-impact { font-size: 11px; color: var(--green); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; margin-top: .4rem; }
 
-/* CTA + RESULTADOS */
+/* RISK FLAGS */
+.risk-flags { display: flex; flex-direction: column; gap: 8px; margin-top: 1.25rem; }
+.risk-flag { display: flex; align-items: flex-start; gap: 10px; padding: .75rem 1rem; border-radius: 8px; font-size: 13px; }
+.risk-flag.high { background: #fef2f2; color: var(--red); }
+.risk-flag.med { background: #fffbeb; color: var(--amber); }
+.risk-flag.low { background: var(--green-light); color: var(--green); }
+.risk-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.risk-text { font-weight: 300; line-height: 1.5; }
+
+/* CTA FINAL */
 .cta-outer { border-top: 0.5px solid var(--border); }
-.cta-box {
-  background: var(--ink); border-radius: var(--radius); padding: 3.5rem 2.5rem;
-  text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden;
-}
-.cta-glow {
-  position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(37,99,235,.25) 0%, transparent 70%);
-}
-.cta-box h2 {
-  font-family: 'Instrument Serif', serif;
-  font-size: clamp(30px, 4vw, 46px); letter-spacing: -.025em;
-  color: var(--paper); margin-bottom: .75rem; font-weight: 400; position: relative;
-}
+.cta-box { background: var(--ink); border-radius: var(--radius); padding: 3.5rem 2.5rem; text-align: center; margin-bottom: 2rem; position: relative; overflow: hidden; }
+.cta-glow { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(37,99,235,.25) 0%, transparent 70%); }
+.cta-box h2 { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 4vw, 44px); letter-spacing: -.025em; color: var(--paper); margin-bottom: .75rem; font-weight: 400; position: relative; }
 .cta-box h2 em { font-style: italic; color: var(--blue-mid); }
-.cta-box p { font-size: 16px; color: rgba(245,242,236,.5); margin-bottom: 2rem; font-weight: 300; max-width: 400px; margin-left: auto; margin-right: auto; position: relative; }
-.btn-cta {
-  display: inline-block; padding: .9rem 2.5rem;
-  background: var(--paper); color: var(--ink); border: none; border-radius: 50px;
-  font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
-  text-decoration: none; transition: background .2s, transform .15s; position: relative;
-}
+.cta-box p { font-size: 15px; color: rgba(245,242,236,.5); margin-bottom: 2rem; font-weight: 300; max-width: 400px; margin-left: auto; margin-right: auto; line-height: 1.65; position: relative; }
+.btn-cta { display: inline-block; padding: .9rem 2.5rem; background: var(--paper); color: var(--ink); border: none; border-radius: 50px; font-size: 15px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; text-decoration: none; transition: background .2s, transform .15s; position: relative; }
 .btn-cta:hover { background: var(--blue); color: #fff; transform: translateY(-1px); }
 .spots { font-size: 12px; color: rgba(245,242,236,.3); margin-top: .75rem; position: relative; }
-
-.results-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden;
-}
+.results-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; }
 .result-item { background: #fff; padding: 2rem 1.75rem; }
-.result-quote {
-  font-family: 'Instrument Serif', serif; font-size: 17px;
-  line-height: 1.5; color: var(--ink); margin-bottom: 1.5rem; letter-spacing: -.01em;
-}
+.result-quote { font-family: 'Instrument Serif', serif; font-size: 16px; line-height: 1.55; color: var(--ink); margin-bottom: 1.25rem; letter-spacing: -.01em; }
 .result-quote em { font-style: italic; color: var(--blue); }
 .result-who { font-size: 12px; color: var(--muted); }
 .result-who strong { font-weight: 500; color: var(--ink); display: block; margin-bottom: 2px; }
 
 /* FOOTER */
-footer {
-  border-top: 0.5px solid var(--border);
-  padding: 1.5rem 3rem;
-  display: flex; justify-content: space-between; align-items: center;
-}
+footer { border-top: 0.5px solid var(--border); padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; }
 .f-logo { font-family: 'Instrument Serif', serif; font-size: 17px; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 7px; }
 footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 
-/* ANIMATIONS */
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -309,7 +221,9 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
   .hero { padding: 7rem 1.5rem 4rem; }
   .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
   .section-wrap { padding: 4rem 1.5rem; }
-  .metrics-row, .results-grid { grid-template-columns: 1fr; }
+  .metrics-grid, .results-grid { grid-template-columns: 1fr; }
+  .email-form { flex-direction: column; }
+  .bar-name { min-width: 110px; }
   footer { flex-direction: column; gap: .5rem; text-align: center; }
 }
 </style>
@@ -318,153 +232,314 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 
 <nav>
   <a href="#" class="logo"><span class="logo-dot"></span>Smartflow</a>
-  <span class="nav-pill">Audit gratuito</span>
+  <span class="nav-pill">AI Readiness Audit</span>
 </nav>
+
+<div class="progress-bar-wrap" id="progress-wrap">
+  <div class="progress-bar-track"><div class="progress-bar-fill" id="progress-fill"></div></div>
+  <div class="progress-label" id="progress-label">Pregunta 1 de 12</div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="eyebrow">AI Readiness Audit</div>
-    <h1>¿Tu empresa está<br>lista para la <em>IA?</em></h1>
-    <p class="hero-sub">6 preguntas. Diagnóstico personalizado generado por IA. Descubre cuántas horas y cuánto dinero estás dejando sobre la mesa cada mes.</p>
+    <div class="eyebrow">Diagnóstico estratégico · Gratuito</div>
+    <h1>¿Cuánto le cuesta<br>a tu empresa<br><em>no usar IA?</em></h1>
+    <p class="hero-sub">En menos de 5 minutos sabrás cuánto dinero estás dejando sobre la mesa cada mes, qué procesos están frenando tu crecimiento — y el primer movimiento concreto para cambiar eso esta semana.</p>
     <a href="#audit" class="hero-arrow">
       <div class="arrow-circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M3 8l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
-      Comenzar
+      Comenzar audit
     </a>
     <div class="hero-stats">
       <div><div class="stat-num">40h</div><div class="stat-lbl">promedio ahorradas por semana</div></div>
       <div><div class="stat-num">30d</div><div class="stat-lbl">primer entregable en producción</div></div>
-      <div><div class="stat-num">3×</div><div class="stat-lbl">ROI promedio en 90 días</div></div>
+      <div><div class="stat-num">171%</div><div class="stat-lbl">ROI promedio reportado</div></div>
     </div>
   </div>
 </section>
 
-<!-- AUDIT -->
+<!-- AUDIT FORM -->
 <div class="section-wrap" id="audit">
-  <div class="section-tag reveal">Tus datos</div>
+  <div class="section-tag reveal">Tu empresa</div>
   <div class="reveal">
+
+    <!-- BLOQUE 1: OPERACIONES -->
+    <div class="q-section-header">Estructura <em>operacional</em></div>
+
     <div class="q-block">
       <div class="q-label">
         <span class="q-text">¿Cuántas personas tiene tu equipo?</span>
-        <div class="q-meta"><span class="q-num">01</span><span class="q-val" id="v1">12</span></div>
+        <div class="q-meta"><span class="q-num">01</span><span class="q-val" id="v1">15</span></div>
       </div>
-      <input type="range" min="1" max="100" step="1" value="12" id="s1" oninput="document.getElementById('v1').textContent=this.value">
-      <div class="q-hint">Incluye full-time y part-time</div>
+      <input type="range" min="1" max="200" step="1" value="15" id="s1" oninput="updateVal('v1',this.value,'');updateProgress()">
+      <div class="q-hint">Full-time + part-time. Incluye todos los departamentos.</div>
     </div>
+
     <div class="q-block">
       <div class="q-label">
-        <span class="q-text">Horas semanales en tareas repetitivas por persona</span>
+        <span class="q-text">Horas semanales por persona en tareas repetitivas</span>
         <div class="q-meta"><span class="q-num">02</span><span class="q-val" id="v2">10 h</span></div>
       </div>
-      <input type="range" min="1" max="40" step="1" value="10" id="s2" oninput="document.getElementById('v2').textContent=this.value+' h'">
-      <div class="q-hint">Reportes, emails, entrada de datos, seguimientos</div>
+      <input type="range" min="1" max="40" step="1" value="10" id="s2" oninput="updateVal('v2',this.value,' h');updateProgress()">
+      <div class="q-hint">Reportes manuales, entrada de datos, emails repetitivos, seguimientos.</div>
     </div>
+
     <div class="q-block">
       <div class="q-label">
         <span class="q-text">Costo hora promedio de tu equipo (USD)</span>
         <div class="q-meta"><span class="q-num">03</span><span class="q-val" id="v3">$25</span></div>
       </div>
-      <input type="range" min="5" max="150" step="5" value="25" id="s3" oninput="document.getElementById('v3').textContent='$'+this.value">
+      <input type="range" min="5" max="200" step="5" value="25" id="s3" oninput="updateVal('v3',this.value,'','$');updateProgress()">
+      <div class="q-hint">Costo total incluyendo beneficios y overhead, no solo salario.</div>
     </div>
+
     <div class="q-block">
       <div class="q-label">
-        <span class="q-text">¿Cuántos procesos críticos no están documentados?</span>
-        <div class="q-meta"><span class="q-num">04</span><span class="q-val" id="v4">4</span></div>
+        <span class="q-text">Ingresos anuales aproximados de la empresa (USD)</span>
+        <div class="q-meta"><span class="q-num">04</span><span class="q-val" id="v4">$500K</span></div>
       </div>
-      <input type="range" min="0" max="20" step="1" value="4" id="s4" oninput="document.getElementById('v4').textContent=this.value">
-      <div class="q-hint">Procesos que dependen de personas clave</div>
+      <div class="pills" id="rev-pills">
+        <div class="pill" id="rev1" onclick="selectPill('rev-pills','rev1');revenue='<100K'">Menos de $100K</div>
+        <div class="pill active" id="rev2" onclick="selectPill('rev-pills','rev2');revenue='100K-500K'">$100K–$500K</div>
+        <div class="pill" id="rev3" onclick="selectPill('rev-pills','rev3');revenue='500K-2M'">$500K–$2M</div>
+        <div class="pill" id="rev4" onclick="selectPill('rev-pills','rev4');revenue='2M-10M'">$2M–$10M</div>
+        <div class="pill" id="rev5" onclick="selectPill('rev-pills','rev5');revenue='+10M'">Más de $10M</div>
+      </div>
     </div>
+
+    <hr class="q-divider">
+
+    <!-- BLOQUE 2: DATOS Y TECNOLOGÍA -->
+    <div class="q-section-header">Madurez de <em>datos y tecnología</em></div>
+
     <div class="q-block">
       <div class="q-label">
-        <span class="q-text">¿Dónde viven los datos de tu empresa?</span>
+        <span class="q-text">¿Dónde viven los datos críticos de tu empresa?</span>
         <div class="q-meta"><span class="q-num">05</span></div>
       </div>
-      <div class="pills">
-        <div class="pill" id="p1" onclick="selectData(1)">Hojas de cálculo</div>
-        <div class="pill" id="p2" onclick="selectData(2)">Sistemas desconectados</div>
-        <div class="pill active" id="p3" onclick="selectData(3)">CRM / ERP parcial</div>
-        <div class="pill" id="p4" onclick="selectData(4)">Todo centralizado</div>
+      <div class="pills" id="data-pills">
+        <div class="pill" id="d1" onclick="selectPill('data-pills','d1');dataScore=1">Emails y WhatsApp</div>
+        <div class="pill" id="d2" onclick="selectPill('data-pills','d2');dataScore=2">Hojas de cálculo</div>
+        <div class="pill active" id="d3" onclick="selectPill('data-pills','d3');dataScore=3">Sistemas desconectados</div>
+        <div class="pill" id="d4" onclick="selectPill('data-pills','d4');dataScore=4">CRM / ERP parcial</div>
+        <div class="pill" id="d5" onclick="selectPill('data-pills','d5');dataScore=5">Todo centralizado</div>
       </div>
-      <div class="q-hint" id="data-hint" style="margin-top:.5rem">Datos en CRM o ERP, sin integrar todas las fuentes</div>
+      <div class="q-hint" id="data-hint">Múltiples herramientas sin integración entre ellas.</div>
     </div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuántos sistemas / herramientas usa tu equipo actualmente?</span>
+        <div class="q-meta"><span class="q-num">06</span><span class="q-val" id="v6">6</span></div>
+      </div>
+      <input type="range" min="1" max="30" step="1" value="6" id="s6" oninput="updateVal('v6',this.value,'');updateProgress()">
+      <div class="q-hint">CRM, ERP, contabilidad, marketing, comunicación, etc.</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuántos procesos críticos dependen de personas específicas?</span>
+        <div class="q-meta"><span class="q-num">07</span><span class="q-val" id="v7">4</span></div>
+      </div>
+      <input type="range" min="0" max="20" step="1" value="4" id="s7" oninput="updateVal('v7',this.value,'');updateProgress()">
+      <div class="q-hint">Procesos que se paralizan si esa persona no está disponible.</div>
+    </div>
+
+    <hr class="q-divider">
+
+    <!-- BLOQUE 3: ÁREA DE NEGOCIO -->
+    <div class="q-section-header">Área de negocio y <em>principales fricciones</em></div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuál es tu industria principal?</span>
+        <div class="q-meta"><span class="q-num">08</span></div>
+      </div>
+      <div class="pills" id="ind-pills">
+        <div class="pill active" id="i1" onclick="selectPill('ind-pills','i1');industry='Inmobiliaria'">Inmobiliaria</div>
+        <div class="pill" id="i2" onclick="selectPill('ind-pills','i2');industry='Retail / Ventas'">Retail / Ventas</div>
+        <div class="pill" id="i3" onclick="selectPill('ind-pills','i3');industry='Logística'">Logística</div>
+        <div class="pill" id="i4" onclick="selectPill('ind-pills','i4');industry='Finanzas'">Finanzas</div>
+        <div class="pill" id="i5" onclick="selectPill('ind-pills','i5');industry='Manufactura'">Manufactura</div>
+        <div class="pill" id="i6" onclick="selectPill('ind-pills','i6');industry='Servicios profesionales'">Servicios</div>
+        <div class="pill" id="i7" onclick="selectPill('ind-pills','i7');industry='Tecnología'">Tecnología</div>
+        <div class="pill" id="i8" onclick="selectPill('ind-pills','i8');industry='Salud'">Salud</div>
+        <div class="pill" id="i9" onclick="selectPill('ind-pills','i9');industry='Otro'">Otro</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuál es tu mayor fricción operativa hoy?</span>
+        <div class="q-meta"><span class="q-num">09</span></div>
+      </div>
+      <div class="pills" id="pain-pills">
+        <div class="pill active" id="pa1" onclick="selectPill('pain-pills','pa1');painPoint='Datos dispersos sin visibilidad'">Datos dispersos</div>
+        <div class="pill" id="pa2" onclick="selectPill('pain-pills','pa2');painPoint='Procesos manuales lentos'">Procesos manuales</div>
+        <div class="pill" id="pa3" onclick="selectPill('pain-pills','pa3');painPoint='Leads que no se convierten'">Leads sin conversión</div>
+        <div class="pill" id="pa4" onclick="selectPill('pain-pills','pa4');painPoint='Documentos y contratos lentos'">Documentos / contratos</div>
+        <div class="pill" id="pa5" onclick="selectPill('pain-pills','pa5');painPoint='Reportes lentos o inexactos'">Reportes inexactos</div>
+        <div class="pill" id="pa6" onclick="selectPill('pain-pills','pa6');painPoint='Atención al cliente lenta'">Atención al cliente</div>
+        <div class="pill" id="pa7" onclick="selectPill('pain-pills','pa7');painPoint='Alto volumen de documentos a procesar'">Volumen de documentos</div>
+      </div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">Volumen mensual de documentos que tu equipo procesa</span>
+        <div class="q-meta"><span class="q-num">10</span></div>
+      </div>
+      <div class="pills" id="doc-pills">
+        <div class="pill" id="doc1" onclick="selectPill('doc-pills','doc1');docVolume='<50'">Menos de 50</div>
+        <div class="pill active" id="doc2" onclick="selectPill('doc-pills','doc2');docVolume='50-200'">50–200</div>
+        <div class="pill" id="doc3" onclick="selectPill('doc-pills','doc3');docVolume='200-1000'">200–1.000</div>
+        <div class="pill" id="doc4" onclick="selectPill('doc-pills','doc4');docVolume='+1000'">Más de 1.000</div>
+      </div>
+      <div class="q-hint">Facturas, contratos, formularios, reportes, PDFs, imágenes con datos.</div>
+    </div>
+
+    <hr class="q-divider">
+
+    <!-- BLOQUE 4: ADOPCIÓN -->
+    <div class="q-section-header">Capacidad de <em>adopción</em></div>
+
     <div class="q-block">
       <div class="q-label">
         <span class="q-text">Apertura del equipo para adoptar IA</span>
-        <div class="q-meta"><span class="q-num">06</span><span class="q-val" id="v6">Media</span></div>
+        <div class="q-meta"><span class="q-num">11</span><span class="q-val" id="v11">Media</span></div>
       </div>
-      <input type="range" min="1" max="3" step="1" value="2" id="s6" oninput="updateReady(this.value)">
-      <div class="q-hint">1 = resistencia · 2 = abiertos · 3 = entusiastas</div>
+      <input type="range" min="1" max="3" step="1" value="2" id="s11" oninput="updateReady(this.value);updateProgress()">
+      <div class="q-hint">1 = resistencia activa · 2 = abiertos al cambio · 3 = entusiastas y proactivos</div>
     </div>
+
+    <div class="q-block">
+      <div class="q-label">
+        <span class="q-text">¿Cuánto llevas intentando resolver esto sin éxito?</span>
+        <div class="q-meta"><span class="q-num">12</span></div>
+      </div>
+      <div class="pills" id="time-pills">
+        <div class="pill" id="t1" onclick="selectPill('time-pills','t1');timeStuck='Menos de 3 meses'">Menos de 3 meses</div>
+        <div class="pill active" id="t2" onclick="selectPill('time-pills','t2');timeStuck='3-12 meses'">3–12 meses</div>
+        <div class="pill" id="t3" onclick="selectPill('time-pills','t3');timeStuck='1-2 años'">1–2 años</div>
+        <div class="pill" id="t4" onclick="selectPill('time-pills','t4');timeStuck='Más de 2 años'">Más de 2 años</div>
+      </div>
+      <div class="q-hint">El tiempo de inacción es parte del diagnóstico.</div>
+    </div>
+
     <hr class="q-divider">
-    <button class="run-btn" id="run-btn" onclick="runAudit()">Generar mi diagnóstico →</button>
+
+    <!-- EMAIL GATE -->
+    <div class="email-gate">
+      <div class="email-gate-glow"></div>
+      <span class="email-gate-tag">Casi listo</span>
+      <h3>Tu diagnóstico está<br>siendo <em>preparado.</em></h3>
+      <p>Ingresa tu email para recibir el análisis completo — también te lo enviamos para que lo tengas siempre disponible.</p>
+      <div class="email-form">
+        <input type="email" class="email-input" id="audit-email" placeholder="tu@empresa.com">
+        <button class="email-submit" id="run-btn" onclick="runAudit()">Ver mi diagnóstico →</button>
+      </div>
+      <div class="email-note">Sin spam · Solo el informe y novedades relevantes de Smartflow</div>
+    </div>
+
   </div>
 </div>
 
 <!-- DIAGNOSIS -->
 <div class="diag-wrap" id="diag-wrap">
   <div class="section-wrap">
-    <div class="section-tag">Diagnóstico</div>
+    <div class="section-tag">Tu diagnóstico</div>
+
+    <!-- GENERATING -->
     <div class="diag-generating" id="diag-generating">
-      <div class="spinner"></div>
-      <p class="gen-lbl">Analizando tu perfil…</p>
+      <div class="gen-steps">
+        <div class="gen-step" id="gs1"><div class="gen-icon"><span class="gen-dot"></span></div><span>Calculando métricas operativas…</span></div>
+        <div class="gen-step" id="gs2"><div class="gen-icon"><span class="gen-dot"></span></div><span>Analizando madurez digital…</span></div>
+        <div class="gen-step" id="gs3"><div class="gen-icon"><span class="gen-dot"></span></div><span>Identificando fricciones críticas…</span></div>
+        <div class="gen-step" id="gs4"><div class="gen-icon"><span class="gen-dot"></span></div><span>Generando análisis ejecutivo…</span></div>
+        <div class="gen-step" id="gs5"><div class="gen-icon"><span class="gen-dot"></span></div><span>Recomendando solución óptima…</span></div>
+      </div>
     </div>
+
+    <!-- CONTENT -->
     <div class="diag-content" id="diag-content">
-      <div class="metrics-row">
-        <div class="metric-cell"><div class="m-num" id="r-hours">—</div><div class="m-lbl">horas/semana automatizables</div></div>
-        <div class="metric-cell"><div class="m-num" id="r-cost">—</div><div class="m-lbl">costo mensual recuperable</div></div>
-        <div class="metric-cell"><div class="m-num" id="r-score">—</div><div class="m-lbl">AI readiness score</div></div>
+
+      <!-- SCORE -->
+      <div class="score-hero">
+        <div class="score-glow"></div>
+        <div class="score-tag">AI Readiness Score</div>
+        <div class="score-ring-wrap">
+          <div><span class="score-num" id="r-score">—</span><span class="score-pct">%</span></div>
+        </div>
+        <div class="score-label" id="score-label">—</div>
+        <div class="metrics-grid">
+          <div class="metric-cell"><div class="m-num" id="r-hours">—</div><div class="m-lbl">horas/semana automatizables</div></div>
+          <div class="metric-cell"><div class="m-num" id="r-cost">—</div><div class="m-lbl">costo mensual recuperable</div></div>
+          <div class="metric-cell"><div class="m-num" id="r-roi">—</div><div class="m-lbl">ROI estimado año 1</div></div>
+        </div>
       </div>
-      <div class="ai-box">
-        <span class="ai-tag">Generado por IA</span>
-        <p class="ai-text" id="ai-text"></p>
+
+      <!-- EXECUTIVE ANALYSIS -->
+      <div class="diag-section">
+        <div class="diag-section-header">
+          <span class="diag-section-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1l1.5 4.5H13L9.5 8l1.5 4L7 10 3 12l1.5-4L1 5.5h4.5z" stroke="#2563eb" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            Análisis ejecutivo
+          </span>
+          <span class="diag-section-badge badge-exec">Generado por IA</span>
+        </div>
+        <div class="diag-section-body">
+          <p class="exec-text" id="ai-text"><span style="color:var(--muted);font-style:italic">Generando…</span></p>
+          <div class="bars-section">
+            <div class="bars-label">Potencial de automatización por área</div>
+            <div class="bar-row"><span class="bar-name">Operaciones</span><div class="bar-track"><div class="bar-fill mid" id="b1"></div></div><span class="bar-pct" id="bp1">0%</span></div>
+            <div class="bar-row"><span class="bar-name">Ventas y CRM</span><div class="bar-track"><div class="bar-fill mid" id="b2"></div></div><span class="bar-pct" id="bp2">0%</span></div>
+            <div class="bar-row"><span class="bar-name">Procesamiento de datos</span><div class="bar-track"><div class="bar-fill mid" id="b3"></div></div><span class="bar-pct" id="bp3">0%</span></div>
+            <div class="bar-row"><span class="bar-name">Atención al cliente</span><div class="bar-track"><div class="bar-fill mid" id="b4"></div></div><span class="bar-pct" id="bp4">0%</span></div>
+            <div class="bar-row"><span class="bar-name">Reportes y finanzas</span><div class="bar-track"><div class="bar-fill mid" id="b5"></div></div><span class="bar-pct" id="bp5">0%</span></div>
+          </div>
+          <div class="risk-flags" id="risk-flags"></div>
+        </div>
       </div>
-      <div style="margin-bottom:2rem">
-        <div class="bars-label">Potencial de automatización por área</div>
-        <div class="bar-row"><span class="bar-name">Operaciones</span><div class="bar-track"><div class="bar-fill" id="b1"></div></div><span class="bar-pct" id="bp1">0%</span></div>
-        <div class="bar-row"><span class="bar-name">Atención al cliente</span><div class="bar-track"><div class="bar-fill" id="b2"></div></div><span class="bar-pct" id="bp2">0%</span></div>
-        <div class="bar-row"><span class="bar-name">Ventas y CRM</span><div class="bar-track"><div class="bar-fill" id="b3"></div></div><span class="bar-pct" id="bp3">0%</span></div>
-        <div class="bar-row"><span class="bar-name">Finanzas y reportes</span><div class="bar-track"><div class="bar-fill" id="b4"></div></div><span class="bar-pct" id="bp4">0%</span></div>
+
+      <!-- OFFER RECOMMENDATION -->
+      <div class="diag-section">
+        <div class="diag-section-header">
+          <span class="diag-section-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2a5 5 0 100 10A5 5 0 007 2zM7 5v2l1.5 1.5" stroke="#d97706" stroke-width="1.3" stroke-linecap="round"/></svg>
+            Solución recomendada
+          </span>
+          <span class="diag-section-badge badge-offer">Personalizada para ti</span>
+        </div>
+        <div class="diag-section-body" id="offer-body">
+          <p style="color:var(--muted);font-size:14px;font-style:italic">Generando recomendación…</p>
+        </div>
       </div>
-      <div class="dash-cta" id="dash-cta">
-        <span class="dash-tag">Recomendado para tu perfil</span>
-        <h3>Dashboard centralizado de IA</h3>
-        <p>Tus datos están fragmentados en múltiples fuentes. Antes de automatizar procesos, necesitas visibilidad total del negocio. Te construimos un dashboard que unifica todo en un solo lugar — listo en 2 semanas.</p>
-        <a href="https://www.loom.com/share/e229224ffbec4c6290a04d451909d557" target="_blank" rel="noopener" class="btn-dash">Quiero ver cómo funciona →</a>
+
+      <!-- ACTION PLAN -->
+      <div class="diag-section">
+        <div class="diag-section-header">
+          <span class="diag-section-title">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M9 4l3 3-3 3" stroke="#16a34a" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Plan de acción — próximos 90 días
+          </span>
+          <span class="diag-section-badge badge-plan">Priorizado por ROI</span>
+        </div>
+        <div class="diag-section-body" id="plan-body">
+          <div class="plan-items" id="plan-items">
+            <div class="plan-item" style="justify-content:center;padding:2rem"><span style="color:var(--muted);font-size:14px;font-style:italic">Generando plan…</span></div>
+          </div>
+        </div>
       </div>
-    </div>
+
+    </div><!-- /diag-content -->
   </div>
 </div>
 
-<!-- PROCESO -->
-<div class="proceso-wrap">
-  <div class="section-wrap">
-    <div class="section-tag reveal">Cómo funciona</div>
-    <div class="reveal">
-      <div class="step-item">
-        <div class="step-n">01</div>
-        <div><div class="step-week">Semana 1</div><div class="step-title">Diagnóstico y mapeo</div><div class="step-desc">Analizamos tus procesos actuales, identificamos los cuellos de botella más costosos y definimos qué automatizar primero para máximo impacto.</div></div>
-      </div>
-      <div class="step-item">
-        <div class="step-n">02</div>
-        <div><div class="step-week">Semana 2–3</div><div class="step-title">Diseño de solución</div><div class="step-desc">Construimos la arquitectura de IA para tu empresa: agentes, flujos, integraciones y dashboards. Sin plantillas genéricas.</div></div>
-      </div>
-      <div class="step-item">
-        <div class="step-n">03</div>
-        <div><div class="step-week">Semana 4</div><div class="step-title">Implementación</div><div class="step-desc">Desplegamos en producción con tu equipo, validamos resultados y ajustamos hasta que los números cuadren con lo prometido.</div></div>
-      </div>
-      <div class="step-item">
-        <div class="step-n">04</div>
-        <div><div class="step-week">Ongoing</div><div class="step-title">Optimización continua</div><div class="step-desc">La IA mejora con el tiempo. Monitoreamos, entrenamos y expandimos la solución conforme crece tu empresa.</div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- CTA + RESULTADOS -->
+<!-- CTA -->
 <div class="cta-outer">
   <div class="section-wrap">
     <div class="section-tag reveal">Siguiente paso</div>
@@ -472,7 +547,7 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
       <div class="cta-box">
         <div class="cta-glow"></div>
         <h2>Sesión estratégica<br><em>sin costo.</em></h2>
-        <p>Te mostramos exactamente qué automatizar primero y el ROI esperado en 90 días para tu empresa.</p>
+        <p>Te mostramos exactamente qué automatizar primero y el ROI esperado en 90 días para tu empresa específica.</p>
         <a href="https://cal.com/smartflow.es/30min?user=smartflow.es" target="_blank" rel="noopener" class="btn-cta">Reservar mi sesión →</a>
         <div class="spots">Solo 4 cupos disponibles esta semana.</div>
       </div>
@@ -500,90 +575,360 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 </footer>
 
 <script>
+// ── STATE ──
 let dataScore = 3;
-const dataHints = ['','Datos muy dispersos, difícil conectar a IA','Múltiples sistemas sin una vista unificada','Datos en CRM o ERP, sin integrar todas las fuentes','Perfecto para implementar IA de inmediato'];
+let revenue = '100K-500K';
+let industry = 'Inmobiliaria';
+let painPoint = 'Datos dispersos sin visibilidad';
+let docVolume = '50-200';
+let timeStuck = '3-12 meses';
 
-function selectData(v) {
-  dataScore = v;
-  [1,2,3,4].forEach(i => document.getElementById('p'+i).classList.toggle('active', i===v));
-  document.getElementById('data-hint').textContent = dataHints[v];
+const dataHints = {1:'Datos muy dispersos — máxima fricción, mínima trazabilidad.',2:'Datos en hojas de cálculo — difícil conectar a IA sin trabajo previo.',3:'Múltiples sistemas sin integración — visión fragmentada del negocio.',4:'CRM/ERP parcial — base sólida, pero con gaps importantes.',5:'Datos centralizados — condiciones óptimas para implementar IA.'};
+
+function updateVal(id, val, suffix, prefix='') {
+  document.getElementById(id).textContent = prefix + val + suffix;
 }
 function updateReady(v) {
-  document.getElementById('v6').textContent = ['','Baja','Media','Alta'][v];
+  document.getElementById('v11').textContent = ['','Baja','Media','Alta'][v];
 }
+function selectPill(groupId, activeId) {
+  document.querySelectorAll('#'+groupId+' .pill').forEach(p => p.classList.remove('active'));
+  document.getElementById(activeId).classList.add('active');
+  if(groupId === 'data-pills') {
+    const map = {d1:1,d2:2,d3:3,d4:4,d5:5};
+    dataScore = map[activeId];
+    document.getElementById('data-hint').textContent = dataHints[dataScore];
+  }
+}
+function updateProgress() {
+  const total = 12;
+  const answered = [
+    +document.getElementById('s1').value > 1,
+    +document.getElementById('s2').value > 1,
+    +document.getElementById('s3').value > 5,
+    true, true, true, true, true, true, true, true, true
+  ].filter(Boolean).length;
+  const pct = Math.min(Math.round((answered / total) * 100), 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `Completado ${pct}%`;
+  document.getElementById('progress-wrap').classList.add('show');
+}
+
 function calcMetrics() {
   const team = +document.getElementById('s1').value;
   const hrs  = +document.getElementById('s2').value;
   const rate = +document.getElementById('s3').value;
-  const procs = +document.getElementById('s4').value;
-  const ready = +document.getElementById('s6').value;
-  const dm = [0,.25,.45,.65,.85];
-  const ar = ((ready===1?.3:ready===2?.55:.75) + dm[dataScore]) / 2;
+  const tools = +document.getElementById('s6').value;
+  const procs = +document.getElementById('s7').value;
+  const ready = +document.getElementById('s11').value;
+
+  const dm = {1:.15, 2:.3, 3:.45, 4:.65, 5:.85};
+  const ar = ((ready===1?.25:ready===2?.55:.80) + dm[dataScore]) / 2;
   const autoHrs = Math.round(team * hrs * ar);
-  const monthlyCost = Math.round(autoHrs * rate * 4);
-  const score = Math.round((ar*50)+(Math.min(procs,10)/10*20)+(Math.min(team,50)/50*15)+(dataScore/4*15));
+  const monthlyCost = Math.round(autoHrs * rate * 4.33);
+
+  const revMultiplier = {
+    '<100K': 0.08, '100K-500K': 0.06, '500K-2M': 0.05, '2M-10M': 0.04, '+10M': 0.03
+  };
+  const revBase = {'<100K':75000,'100K-500K':300000,'500K-2M':1250000,'2M-10M':6000000,'+10M':15000000};
+  const roiPct = Math.round((monthlyCost * 12) / (revBase[revenue] || 300000) * 100 * 10) / 10;
+  const roiStr = roiPct > 0 ? roiPct + 'x' : '—';
+
+  const score = Math.min(Math.round(
+    (ar * 45) + (Math.min(procs, 10) / 10 * 20) +
+    (Math.min(team, 100) / 100 * 15) + (dataScore / 5 * 20)
+  ), 98);
+
   const bars = [
-    Math.min(Math.round(40+ready*10+Math.min(hrs,20)*1.2+dataScore*3),95),
-    Math.min(Math.round(35+ready*9+team*0.25+dataScore*2),95),
-    Math.min(Math.round(30+ready*8+procs*1.8+dataScore*3),95),
-    Math.min(Math.round(25+ready*9+hrs*1+dataScore*4),95)
+    Math.min(Math.round(35 + ready*10 + Math.min(hrs,20)*1.3 + dataScore*3), 95),
+    Math.min(Math.round(30 + ready*9  + (painPoint.includes('Lead')?15:0) + dataScore*3), 95),
+    Math.min(Math.round(25 + (docVolume==='+1000'?30:docVolume==='200-1000'?20:docVolume==='50-200'?10:5) + dataScore*4 + ready*6), 95),
+    Math.min(Math.round(30 + ready*8  + team*0.3 + dataScore*2), 95),
+    Math.min(Math.round(25 + ready*9  + hrs*1.2 + dataScore*3), 95),
   ];
-  return { team, hrs, rate, procs, ready, autoHrs, monthlyCost, score, bars };
+
+  return { team, hrs, rate, tools, procs, ready, autoHrs, monthlyCost, roiStr, score, bars };
+}
+
+function getScoreLabel(score) {
+  if(score >= 75) return '🟢 Alta preparación — Condiciones óptimas para implementar IA ahora';
+  if(score >= 50) return '🟡 Preparación media — Oportunidad clara con trabajo previo de datos';
+  if(score >= 30) return '🟠 Preparación inicial — Potencial alto, requiere fundamentos sólidos primero';
+  return '🔴 Preparación baja — El costo de la inacción crece cada mes';
+}
+
+function getRisks(m) {
+  const risks = [];
+  if(dataScore <= 2) risks.push({level:'high', text:'Datos muy dispersos: cualquier implementación de IA fallará sin unificar las fuentes primero. Esto es la prioridad #0.'});
+  if(m.procs >= 8) risks.push({level:'high', text:`${m.procs} procesos críticos dependen de personas. Riesgo operativo severo — cada salida del equipo puede paralizar el negocio.`});
+  if(m.ready === 1) risks.push({level:'med', text:'Resistencia interna al cambio: sin gestión activa del cambio, la adopción fracasará independientemente de la tecnología elegida.'});
+  if(m.tools >= 10) risks.push({level:'med', text:`${m.tools} herramientas activas sin integración generan silos de información y duplicación de trabajo. Consolida antes de añadir más.`});
+  if(timeStuck !== 'Menos de 3 meses') risks.push({level:'med', text:`Llevas ${timeStuck} sin resolver esto. El costo acumulado de la inacción ya supera el costo de implementación.`});
+  if(risks.length === 0) risks.push({level:'low', text:'Perfil sólido: buena base de datos y equipo receptivo. Las condiciones son favorables para una implementación acelerada.'});
+  return risks;
+}
+
+function getOfferRecommendation(m, aiResult) {
+  const offers = [
+    {
+      id: 'dashboard',
+      name: 'Dashboard y portal a medida',
+      desc: 'Centralización de todas tus fuentes de datos en un portal visual en tiempo real. Visibilidad total del negocio sin hojas de cálculo ni reportes manuales.',
+      score: 0,
+      cta: 'Ver demo del dashboard'
+    },
+    {
+      id: 'inmobiliaria',
+      name: 'Paquete inmobiliaria — Captación y cualificación IA',
+      desc: 'Sistema automatizado de captación, cualificación de leads y agendamiento por WhatsApp. El primer respondedor gana el 78% de los clientes.',
+      score: 0,
+      cta: 'Ver cómo funciona'
+    },
+    {
+      id: 'documentos',
+      name: 'Conversor masivo de documentos',
+      desc: 'Procesa PDFs, imágenes y formularios en masa y extrae datos estructurados automáticamente. Elimina la entrada manual de datos por completo.',
+      score: 0,
+      cta: 'Probar extractor gratis'
+    }
+  ];
+
+  // Score each offer based on user profile
+  // Dashboard
+  if(dataScore <= 3) offers[0].score += 40;
+  if(m.tools >= 5) offers[0].score += 20;
+  if(painPoint.includes('Datos') || painPoint.includes('Reportes')) offers[0].score += 30;
+  if(m.procs >= 5) offers[0].score += 10;
+
+  // Inmobiliaria
+  if(industry === 'Inmobiliaria') offers[1].score += 60;
+  if(painPoint.includes('Leads') || painPoint.includes('conversión')) offers[1].score += 30;
+  if(painPoint.includes('Atención')) offers[1].score += 20;
+
+  // Documentos
+  if(docVolume === '+1000' || docVolume === '200-1000') offers[2].score += 50;
+  if(painPoint.includes('Documentos') || painPoint.includes('documentos')) offers[2].score += 40;
+  if(industry === 'Logística' || industry === 'Finanzas' || industry === 'Manufactura') offers[2].score += 20;
+
+  offers.sort((a,b) => b.score - a.score);
+
+  return offers;
+}
+
+// ── GENERATE STEPS ANIMATION ──
+function animateGenSteps(cb) {
+  const steps = ['gs1','gs2','gs3','gs4','gs5'];
+  const delays = [0, 700, 1500, 2500, 3500];
+  steps.forEach((id, i) => {
+    setTimeout(() => {
+      if(i > 0) {
+        const prev = document.getElementById(steps[i-1]);
+        prev.classList.remove('active'); prev.classList.add('done');
+        prev.querySelector('.gen-icon').innerHTML = '<span class="gen-check">✓</span>';
+      }
+      const el = document.getElementById(id);
+      el.classList.add('active');
+      el.querySelector('.gen-icon').innerHTML = '<span class="mini-spinner"></span>';
+    }, delays[i]);
+  });
+  setTimeout(() => {
+    const last = document.getElementById('gs5');
+    last.classList.remove('active'); last.classList.add('done');
+    last.querySelector('.gen-icon').innerHTML = '<span class="gen-check">✓</span>';
+    if(cb) cb();
+  }, 5000);
 }
 
 async function runAudit() {
+  const email = document.getElementById('audit-email').value.trim();
+  if(!email || !email.includes('@') || !email.includes('.')) {
+    document.getElementById('audit-email').style.borderColor = '#dc2626';
+    return;
+  }
+
   const btn = document.getElementById('run-btn');
-  btn.disabled = true; btn.textContent = 'Analizando…';
+  btn.disabled = true; btn.textContent = 'Procesando…';
+
   const m = calcMetrics();
 
+  // Show diagnosis section
   const diagWrap = document.getElementById('diag-wrap');
   diagWrap.classList.add('show');
   document.getElementById('diag-generating').classList.add('show');
   document.getElementById('diag-content').classList.remove('show');
-  setTimeout(() => diagWrap.scrollIntoView({behavior:'smooth',block:'start'}), 100);
+  setTimeout(() => diagWrap.scrollIntoView({behavior:'smooth', block:'start'}), 100);
 
+  // Set static metrics immediately
+  document.getElementById('r-score').textContent = m.score;
+  document.getElementById('score-label').textContent = getScoreLabel(m.score);
   document.getElementById('r-hours').textContent = m.autoHrs;
-  document.getElementById('r-cost').textContent = '$'+m.monthlyCost.toLocaleString();
-  document.getElementById('r-score').textContent = m.score+'%';
-  m.bars.forEach((v,i) => document.getElementById('bp'+(i+1)).textContent = v+'%');
-  document.getElementById('dash-cta').classList.toggle('show', dataScore<=2);
+  document.getElementById('r-cost').textContent = '$' + m.monthlyCost.toLocaleString();
+  document.getElementById('r-roi').textContent = m.roiStr;
+  m.bars.forEach((v,i) => {
+    document.getElementById('bp'+(i+1)).textContent = v+'%';
+    const fill = document.getElementById('b'+(i+1));
+    fill.classList.remove('high','mid','low');
+    fill.classList.add(v >= 70 ? 'high' : v >= 50 ? 'mid' : 'low');
+  });
 
-  const dataLabels=['','hojas de cálculo dispersas','múltiples sistemas desconectados','CRM o ERP parcialmente integrado','datos centralizados y limpios'];
-  const readyLabels=['','baja (resistencia al cambio)','media (equipo abierto)','alta (equipo tech-friendly)'];
-  const rateVal = document.getElementById('s3').value;
+  // Render risks
+  const risks = getRisks(m);
+  document.getElementById('risk-flags').innerHTML = risks.map(r =>
+    `<div class="risk-flag ${r.level}"><span class="risk-icon">${r.level==='high'?'⚠️':r.level==='med'?'💡':'✅'}</span><span class="risk-text">${r.text}</span></div>`
+  ).join('');
 
-  const prompt = `Eres el sistema de diagnóstico de Smartflow, una consultora de IA. Un prospecto completó el audit con estos datos:\n\n- Equipo: ${m.team} personas\n- Horas semanales en tareas repetitivas por persona: ${m.hrs}h\n- Costo hora promedio: $${rateVal}\n- Procesos críticos sin documentar: ${m.procs}\n- Estado de los datos: ${dataLabels[dataScore]}\n- Apertura del equipo: ${readyLabels[m.ready]}\n\nMétricas calculadas:\n- Horas automatizables/semana: ${m.autoHrs}h\n- Costo mensual recuperable: $${m.monthlyCost.toLocaleString()}\n- AI Readiness Score: ${m.score}%\n\nEscribe un diagnóstico de 3 a 4 oraciones. Directo, sin rodeos, lenguaje de consultor experimentado. Menciona el principal obstáculo según sus datos y una recomendación concreta del primer paso. Sin listas, sin markdown, solo texto corrido. Usa "tu empresa".`;
+  // Capture lead — fire and forget
+  fetch('/api/capture-lead', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ email, fuente: 'AI Readiness Audit', industry })
+  }).catch(() => {});
+
+  // Build AI prompt — McKinsey/EY level
+  const prompt = `Eres un socio senior de consultoría estratégica de una firma de primer nivel (McKinsey, EY, Deloitte). Estás presentando el análisis de madurez de IA a un cliente en una reunión ejecutiva de primer contacto. Tu objetivo: dejarles con la certeza de que entiendes su negocio mejor que ellos mismos, y que la inacción tiene un costo real y creciente.
+
+PERFIL DEL CLIENTE:
+- Industria: ${industry}
+- Equipo: ${m.team} personas
+- Horas semanales en tareas repetitivas por persona: ${m.hrs}h
+- Costo hora promedio: $${m.rate}
+- Ingresos anuales: ${revenue} USD
+- Estado de los datos: ${{1:'Datos en emails y WhatsApp — sin estructura',2:'Hojas de cálculo dispersas',3:'Múltiples sistemas desconectados',4:'CRM/ERP parcialmente integrado',5:'Datos centralizados y limpios'}[dataScore]}
+- Herramientas activas: ${m.tools}
+- Procesos dependientes de personas clave: ${m.procs}
+- Principal fricción operativa: ${painPoint}
+- Volumen mensual de documentos: ${docVolume}
+- Apertura del equipo: ${{1:'Resistencia activa',2:'Abiertos al cambio',3:'Entusiastas y proactivos'}[m.ready]}
+- Tiempo sin resolver el problema: ${timeStuck}
+
+MÉTRICAS CALCULADAS:
+- Horas automatizables/semana: ${m.autoHrs}h
+- Costo mensual recuperable: $${m.monthlyCost.toLocaleString()}
+- AI Readiness Score: ${m.score}%
+
+INSTRUCCIONES:
+Genera un análisis ejecutivo y un plan de acción en JSON estricto sin markdown. Sé específico con los números reales. Usa lenguaje directo, sin jerga innecesaria. Menciona el costo real de la inacción. El plan debe ser accionable esta semana, no teoría.
+
+RESPONDE SOLO CON ESTE JSON EXACTO (sin texto extra, sin markdown):
+{
+  "analisis": "4-5 oraciones de análisis ejecutivo brutal y específico. Menciona los números reales. Nombra la fricción principal por su nombre. Di cuánto está costando cada mes en términos concretos. Menciona el riesgo de seguir igual. Cierra con el potencial real si actúan ahora.",
+  "plan": [
+    {
+      "titulo": "Acción concreta esta semana",
+      "descripcion": "Qué hacer exactamente, no qué pensar. 2-3 oraciones específicas.",
+      "impacto": "Impacto esperado en 30 días"
+    },
+    {
+      "titulo": "Acción concreta semana 2-4",
+      "descripcion": "Siguiente paso lógico. 2-3 oraciones.",
+      "impacto": "Impacto esperado en 60 días"
+    },
+    {
+      "titulo": "Palanca de mayor ROI (día 30-90)",
+      "descripcion": "La iniciativa de mayor retorno para este perfil específico. 2-3 oraciones.",
+      "impacto": "Impacto esperado en 90 días"
+    }
+  ],
+  "oferta_recomendada": "dashboard|inmobiliaria|documentos",
+  "razon_oferta": "2-3 oraciones explicando por qué esta oferta específica es la de mayor impacto para este cliente, con argumentos basados en sus datos reales."
+}`;
 
   try {
-    // Calls our own Vercel serverless function — API key never expuesta
     const res = await fetch('/api/diagnose', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ prompt })
     });
     const data = await res.json();
-    const diagText = data.text || 'No se pudo generar el diagnóstico.';
+    let parsed = null;
+    try { parsed = JSON.parse((data.text || '').replace(/```json|```/g, '').trim()); } catch(e) {}
 
-    document.getElementById('diag-generating').classList.remove('show');
-    document.getElementById('diag-content').classList.add('show');
-    setTimeout(()=>m.bars.forEach((v,i)=>{document.getElementById('b'+(i+1)).style.width=v+'%';}), 200);
+    animateGenSteps(() => {
+      document.getElementById('diag-generating').classList.remove('show');
+      document.getElementById('diag-content').classList.add('show');
 
-    const el = document.getElementById('ai-text');
-    el.innerHTML = '<span class="cursor"></span>';
-    const cursor = el.querySelector('.cursor');
-    let i = 0; const chars = diagText.split('');
-    function type() {
-      if(i<chars.length){cursor.insertAdjacentText('beforebegin',chars[i++]);setTimeout(type,16);}
-      else{cursor.remove();setTimeout(()=>document.querySelector('.proceso-wrap').scrollIntoView({behavior:'smooth',block:'start'}),800);}
-    }
-    type();
+      // Animate bars
+      setTimeout(() => {
+        m.bars.forEach((v,i) => {
+          document.getElementById('b'+(i+1)).style.width = v + '%';
+        });
+      }, 300);
+
+      // Typewriter for analysis
+      const analysisText = parsed?.analisis || data.text || 'No se pudo generar el análisis.';
+      const el = document.getElementById('ai-text');
+      el.innerHTML = '<span class="cursor"></span>';
+      const cursor = el.querySelector('.cursor');
+      let i = 0; const chars = analysisText.split('');
+      function type() {
+        if(i < chars.length) { cursor.insertAdjacentText('beforebegin', chars[i++]); setTimeout(type, 14); }
+        else { cursor.remove(); renderOffer(parsed, m); renderPlan(parsed); }
+      }
+      type();
+
+      setTimeout(() => document.querySelector('.cta-outer').scrollIntoView({behavior:'smooth', block:'start'}), analysisText.length * 14 + 3000);
+    });
+
   } catch(e) {
-    document.getElementById('diag-generating').classList.remove('show');
-    document.getElementById('diag-content').classList.add('show');
-    document.getElementById('ai-text').textContent='Hubo un problema generando el diagnóstico. Intenta de nuevo.';
-    m.bars.forEach((v,i)=>{document.getElementById('b'+(i+1)).style.width=v+'%';});
+    animateGenSteps(() => {
+      document.getElementById('diag-generating').classList.remove('show');
+      document.getElementById('diag-content').classList.add('show');
+      document.getElementById('ai-text').textContent = 'Error generando el diagnóstico. Intenta de nuevo.';
+      m.bars.forEach((v,i) => { document.getElementById('b'+(i+1)).style.width = v + '%'; });
+    });
   }
-  btn.disabled=false; btn.textContent='Generar mi diagnóstico →';
+
+  btn.disabled = false; btn.textContent = 'Ver mi diagnóstico →';
+}
+
+function renderOffer(parsed, m) {
+  const offers = getOfferRecommendation(m, parsed);
+  const aiRec = parsed?.oferta_recomendada;
+  const aiReason = parsed?.razon_oferta;
+
+  // Override top offer if AI explicitly recommended one
+  if(aiRec) {
+    const map = {dashboard:0, inmobiliaria:1, documentos:2};
+    const idx = map[aiRec];
+    if(idx !== undefined) offers.sort((a,b) => a.id === aiRec ? -1 : b.id === aiRec ? 1 : 0);
+  }
+
+  const offerLinks = {
+    dashboard: 'https://www.loom.com/share/e229224ffbec4c6290a04d451909d557',
+    inmobiliaria: 'https://smartflow-inmo.vercel.app',
+    documentos: 'https://smartflow-docs.vercel.app'
+  };
+
+  const html = offers.map((o, idx) => `
+    <div class="offer-card ${idx === 0 ? 'recommended' : ''}">
+      <div class="offer-card-header">
+        <span class="offer-name">${o.name}</span>
+        <span class="offer-fit-badge ${idx === 0 ? 'fit-primary' : 'fit-secondary'}">${idx === 0 ? '★ Mejor encaje' : idx === 1 ? '2º opción' : '3º opción'}</span>
+      </div>
+      <p class="offer-desc">${o.desc}</p>
+      ${idx === 0 && aiReason ? `<p class="offer-reason">Por qué para ti: ${aiReason}</p>` : ''}
+      ${idx === 0 ? `<div style="margin-top:1rem"><a href="${offerLinks[o.id]}" target="_blank" rel="noopener" style="display:inline-block;padding:.65rem 1.5rem;background:var(--blue);color:#fff;border-radius:50px;font-size:13px;font-weight:500;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">${o.cta} →</a></div>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('offer-body').innerHTML = html;
+}
+
+function renderPlan(parsed) {
+  if(!parsed?.plan) {
+    document.getElementById('plan-items').innerHTML = '<div class="plan-item" style="padding:1.5rem"><p style="color:var(--muted);font-size:14px">No se pudo generar el plan. Intenta de nuevo.</p></div>';
+    return;
+  }
+  document.getElementById('plan-items').innerHTML = parsed.plan.map((p, i) => `
+    <div class="plan-item">
+      <div class="plan-num">${['01','02','03'][i]}</div>
+      <div class="plan-content">
+        <div class="plan-title">${p.titulo}</div>
+        <div class="plan-desc">${p.descripcion}</div>
+        <div class="plan-impact">↑ ${p.impacto}</div>
+      </div>
+    </div>
+  `).join('');
 }
 
 const obs = new IntersectionObserver(entries=>{
