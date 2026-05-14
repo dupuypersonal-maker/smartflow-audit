@@ -777,11 +777,34 @@ async function runAudit() {
     `<div class="risk-flag ${r.level}"><span class="risk-icon">${r.level==='high'?'⚠️':r.level==='med'?'💡':'✅'}</span><span class="risk-text">${r.text}</span></div>`
   ).join('');
 
-  // Capture lead — fire and forget
+  // Capture lead + full audit data — fire and forget
+  const dataLabels = {1:'Emails y WhatsApp',2:'Hojas de cálculo',3:'Sistemas desconectados',4:'CRM/ERP parcial',5:'Datos centralizados'};
+  const readyLabels = {1:'Baja — resistencia activa',2:'Media — abiertos al cambio',3:'Alta — entusiastas'};
+
   fetch('/api/capture-lead', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({ email, fuente: 'AI Readiness Audit', industry })
+    body: JSON.stringify({
+      email,
+      fuente: 'AI Readiness Audit',
+      industry,
+      auditData: {
+        score: m.score,
+        industry,
+        painPoint,
+        dataLabel: dataLabels[dataScore] || '',
+        team: m.team,
+        hrs: m.hrs,
+        rate: m.rate,
+        revenue,
+        docVolume,
+        timeStuck,
+        readyLabel: readyLabels[m.ready] || '',
+        monthlyCost: m.monthlyCost,
+        autoHrs: m.autoHrs,
+        ofertaRecomendada: '',  // filled after AI responds
+      }
+    })
   }).catch(() => {});
 
   // Build AI prompt — McKinsey/EY level
@@ -883,6 +906,29 @@ RESPONDE SOLO CON ESTE JSON EXACTO (sin texto extra, sin markdown):
 
 function renderOffer(parsed, m) {
   const offers = getOfferRecommendation(m, parsed);
+  // Save offer recommendation to Airtable once AI responds
+  if(parsed?.oferta_recomendada) {
+    fetch('/api/capture-lead', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        email,
+        fuente: 'AI Readiness Audit',
+        industry,
+        auditData: {
+          score: m.score,
+          industry,
+          painPoint,
+          dataLabel: {1:'Emails y WhatsApp',2:'Hojas de cálculo',3:'Sistemas desconectados',4:'CRM/ERP parcial',5:'Datos centralizados'}[dataScore]||'',
+          team: m.team, hrs: m.hrs, rate: m.rate, revenue, docVolume, timeStuck,
+          readyLabel: {1:'Baja',2:'Media',3:'Alta'}[m.ready]||'',
+          monthlyCost: m.monthlyCost, autoHrs: m.autoHrs,
+          ofertaRecomendada: parsed.oferta_recomendada,
+        }
+      })
+    }).catch(()=>{});
+  }
+
   const aiRec = parsed?.oferta_recomendada;
   const aiReason = parsed?.razon_oferta;
 
