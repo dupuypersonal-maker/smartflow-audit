@@ -13,7 +13,7 @@
   --blue: #2563eb;
   --blue-light: #eff4ff;
   --blue-mid: #93aff5;
-  --muted: #888076;
+  --muted: #716a61;
   --border: rgba(14,14,14,0.12);
   --radius: 16px;
   --green: #16a34a;
@@ -32,7 +32,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-pill { font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); background: var(--blue-light); padding: 5px 14px; border-radius: 50px; border: 0.5px solid rgba(37,99,235,.2); }
 
 /* HERO */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
+.hero { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8rem 2rem 5rem; position: relative; overflow: hidden; }
 .hero-bg { position: absolute; inset: 0; z-index: 0; background: radial-gradient(ellipse 55% 50% at 65% 35%, rgba(37,99,235,0.09) 0%, transparent 70%), radial-gradient(ellipse 40% 55% at 15% 75%, rgba(37,99,235,0.05) 0%, transparent 60%); }
 .hero-grid { position: absolute; inset: 0; z-index: 0; opacity: .4; background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); }
 .hero-content { position: relative; z-index: 1; max-width: 680px; }
@@ -215,6 +215,14 @@ footer p { font-size: 12px; color: var(--muted); font-weight: 300; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .eyebrow, h1, .hero-sub, .hero-arrow, .hero-stats { animation: none; opacity: 1; }
+  .arrow-circle, .cursor { animation: none; }
+  .reveal { transform: none; transition: opacity .2s ease; }
+  .progress-bar-fill, .bar-fill { transition: none; }
+}
 
 @media(max-width:640px){
   nav { padding: 1rem 1.5rem; }
@@ -716,28 +724,32 @@ function getOfferRecommendation(m, aiResult) {
   return offers;
 }
 
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
 // ── GENERATE STEPS ANIMATION ──
-function animateGenSteps(cb) {
-  const steps = ['gs1','gs2','gs3','gs4','gs5'];
-  const delays = [0, 700, 1500, 2500, 3500];
-  steps.forEach((id, i) => {
-    setTimeout(() => {
-      if(i > 0) {
-        const prev = document.getElementById(steps[i-1]);
-        prev.classList.remove('active'); prev.classList.add('done');
-        prev.querySelector('.gen-icon').innerHTML = '<span class="gen-check">✓</span>';
-      }
-      const el = document.getElementById(id);
-      el.classList.add('active');
-      el.querySelector('.gen-icon').innerHTML = '<span class="mini-spinner"></span>';
-    }, delays[i]);
-  });
-  setTimeout(() => {
-    const last = document.getElementById('gs5');
-    last.classList.remove('active'); last.classList.add('done');
-    last.querySelector('.gen-icon').innerHTML = '<span class="gen-check">✓</span>';
-    if(cb) cb();
-  }, 5000);
+// Starts on submit and runs while the request is in flight. The last step keeps
+// its spinner until the response arrives; finish() then completes every step.
+function startGenSteps() {
+  const steps = ['gs1','gs2','gs3','gs4','gs5'].map(id => document.getElementById(id));
+  const delays = [700, 1500, 2500, 3500];
+  const setState = (el, state) => {
+    el.classList.remove('active','done');
+    if(state) el.classList.add(state);
+    el.querySelector('.gen-icon').innerHTML =
+      state === 'active' ? '<span class="mini-spinner"></span>' :
+      state === 'done' ? '<span class="gen-check">✓</span>' : '<span class="gen-dot"></span>';
+  };
+  steps.forEach(el => setState(el, null));
+  setState(steps[0], 'active');
+  const timers = delays.map((d, i) => setTimeout(() => {
+    setState(steps[i], 'done');
+    setState(steps[i+1], 'active');
+  }, d));
+  return function finish(cb) {
+    timers.forEach(clearTimeout);
+    steps.forEach(el => setState(el, 'done'));
+    setTimeout(cb, 300);
+  };
 }
 
 async function runAudit() {
@@ -749,6 +761,9 @@ async function runAudit() {
 
   const btn = document.getElementById('run-btn');
   btn.disabled = true; btn.textContent = 'Procesando…';
+  // Re-enabled only once the whole diagnosis has rendered, so a second click
+  // can't start overlapping step and typewriter timers.
+  const resetBtn = () => { btn.disabled = false; btn.textContent = 'Ver mi diagnóstico →'; };
 
   const m = calcMetrics();
 
@@ -757,7 +772,8 @@ async function runAudit() {
   diagWrap.classList.add('show');
   document.getElementById('diag-generating').classList.add('show');
   document.getElementById('diag-content').classList.remove('show');
-  setTimeout(() => diagWrap.scrollIntoView({behavior:'smooth', block:'start'}), 100);
+  const finishGenSteps = startGenSteps();
+  setTimeout(() => diagWrap.scrollIntoView({behavior: reduceMotion.matches ? 'auto' : 'smooth', block:'start'}), 100);
 
   // Set static metrics immediately
   document.getElementById('r-score').textContent = m.score;
@@ -867,7 +883,7 @@ RESPONDE SOLO CON ESTE JSON EXACTO (sin texto extra, sin markdown):
     let parsed = null;
     try { parsed = JSON.parse((data.text || '').replace(/```json|```/g, '').trim()); } catch(e) {}
 
-    animateGenSteps(() => {
+    finishGenSteps(() => {
       document.getElementById('diag-generating').classList.remove('show');
       document.getElementById('diag-content').classList.add('show');
 
@@ -886,23 +902,20 @@ RESPONDE SOLO CON ESTE JSON EXACTO (sin texto extra, sin markdown):
       let i = 0; const chars = analysisText.split('');
       function type() {
         if(i < chars.length) { cursor.insertAdjacentText('beforebegin', chars[i++]); setTimeout(type, 14); }
-        else { cursor.remove(); renderOffer(parsed, m); renderPlan(parsed); }
+        else { cursor.remove(); renderOffer(parsed, m); renderPlan(parsed); resetBtn(); }
       }
       type();
-
-      setTimeout(() => document.querySelector('.cta-outer').scrollIntoView({behavior:'smooth', block:'start'}), analysisText.length * 14 + 3000);
     });
 
   } catch(e) {
-    animateGenSteps(() => {
+    finishGenSteps(() => {
       document.getElementById('diag-generating').classList.remove('show');
       document.getElementById('diag-content').classList.add('show');
       document.getElementById('ai-text').textContent = 'Error generando el diagnóstico. Intenta de nuevo.';
       m.bars.forEach((v,i) => { document.getElementById('b'+(i+1)).style.width = v + '%'; });
+      resetBtn();
     });
   }
-
-  btn.disabled = false; btn.textContent = 'Ver mi diagnóstico →';
 }
 
 function renderOffer(parsed, m) {
